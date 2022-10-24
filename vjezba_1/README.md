@@ -169,6 +169,8 @@ void hello() { /* Function definition */
    printf("Hello, World!\n");
 }
 ```
+
+Primijetimo da ovdje `.h` datoteka nije obgrljena znakovima `<` i `>` već se nalazi u navodnicima. Razlog tome je što se naše `hello.h` zaglavlje ne nalazi u standardnom direktoriju svih `c/c++` zaglavlja.
 ___
 
 Kompajliranje je slično kao i u prvom slučaju, samo što ovdje nabrajamo sve `.c` datoteke:
