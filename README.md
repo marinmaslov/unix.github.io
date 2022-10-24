@@ -155,7 +155,87 @@ I na kraju pokrenemo program s:
 ```
 ___
 
-Sve što nam preostaje je stvoriti `Makefile` datoteku u kojoj ćemo pravilima povezati prevođenje i izvršavanje ovih dvaju programa.
+Sve što nam preostaje je stvoriti `Makefile` datoteku u kojoj ćemo pravilima povezati prevođenje i izvršavanje ovih dvaju programa te na taj način omogućiti automatsko prevođenje i izvršavanje, bez da svaku put posebno unosimo naredbe za prevođenje i naredbe za izvršavanje.
+
+Za stvaranje makefile datoteke upisujemo sljedeću naredbu:
+
+``` bash
+joe makefile
+```
+___
+
+U jednoj `Makefile` datoteci može biti više pravila, pa ćemo ih sve zapisati u istu, no prije toga prođimo malo kroz `make` sintaksu.
+
+___
+
+#### Make varijable
+
+Varijable se definiraju korištenjem znaka `$` ispred imena varijable koje se nalazi u zagradama.
+
+``` bash
+$(VARIJABLA) = nekakav_string
+```
+___
+
+#### Make pravila
+
+Pravila za prevodenje i povezivanje dana su u formi:
+
+``` bash
+naziv_pravila: ovisnosti
+   naredbe
+   ...
+```
+
+- `naziv_pravila` je najčešće isti kao i ime datoteke koja nastaje kao produkt izvođenja pravila
+- `ovisnosti` (dependencies) predstavljaju datoteke koje su potrebne za izvršavanje pravila
+- `maredbe` su skup postupaka koji se izvršavaju kada je pozvano određeno pravilo (redak u kojem je pravilo mora bit uvučen [`TAB`])
+
+Postoje još i `implicitna pravila` koja se koriste za opisivanje nekih postupaka koji se izvode vrlo često.
+
+Na primjer:
+
+``` bash
+.c.o:
+  $(CC) $(CFLAGS) -c $<
+```
+
+je implicitno pravilo koje se koristi za dobivanje objektne datoteke (`.o`) iz datoteke `C` izvornog koda.
+
+___
+
+U našoj makefile datoteci ćemo prvo definirati varijable:
+
+``` bash
+CC = /usr/bin/gcc
+CFLAGS = -Wall
+TARGETS = prvi prvi2 drugi drugi2
+```
+
+- `CC` je putanja do `gcc` prevodioca
+- `CFLAGS` opcije za `gcc` prevodioca (sadrži `-Wall`, koja omogućuje ispis grešaka na zaslonu)
+- `TARGETS` imena izvršnih datoteka (koristi se u pravilima `all` i `clean`)
+
+___
+
+Nakon definiranja varijabli, potrebno je definirati defaultno (zadano) pravilo koje se izvršava ako `make` rutinu pozovemo bez imena pravila:
+
+``` bash
+default: drugi
+all: $(TARGETS)
+```
+
+___
+
+Sada ćemo definirati pravilo za sljedeće:
+- prevođenje i povezivanje porgrama prvi i drugi korištenjem datoteka objektnog koda [`.o` datoteke]
+- prevođenje i povezivanje programa prvi i drugi korištenjem datoteka izvornog koda (ulaz u `gcc` prevodioca [`.c` datoteke])
+
+
+
+
+
+
 
 ``` bash
 CC = /usr/bin/gcc
