@@ -104,6 +104,42 @@ void hello() {
 ```
 ___
 
+Međutim, nećemo tek tako uključiti `hello.c` datoteku u naš glavni program već ćemo napisati `header` datoteku (`hello.h`) i to na slijedeći način:
+
+``` c
+#ifndef HEADER_FILE
+#define HEADER_FILE
+
+void hello();
+
+#endif
+```
+
+___
+
+Sada prepravimo `drugi.c` i `hello.c` na sljedeći način:
+
+`drugi.c`:
+```c
+#include <stdio.h>
+#include "hello.h"
+
+int main() {
+   hello();
+   return 0;
+}
+```
+
+`hello.c`:
+```c
+#include "hello.h"
+
+void hello() {
+   printf("Hello, World!");
+}
+```
+___
+
 Kompajliranje je isto kao i u prvom slučaju:
 
 ``` bash
