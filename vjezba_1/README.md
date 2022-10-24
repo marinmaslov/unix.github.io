@@ -8,7 +8,7 @@ U prvom slučaju poruka se ispisuje iz glavnog programa. U drugom slučaju, funk
 Vježbu napravite na slijedeći način:
 
 
-## Pregled vježbe 🧭
+## Upute 🧭
 
 Za početak se pozicionirajmo u `unix` direktorij.
 
