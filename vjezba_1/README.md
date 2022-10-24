@@ -1,12 +1,17 @@
 # 🚀 Vježba 1: Prevođenje i povezivanje programa
 
-## Zadatak 📋
+# Zadatak 📋
 U okviru vježbe potrebno je napisati program koji ispisuje pozdravnu poruku, na dva načina.
 
-U prvom slučaju poruka se ispisuje iz glavnog programa. U drugom slučaju, funkcija koja ispisuje samu poruku nalazi se u zasebnoj datoteci izvornog koda. Izvorni kod svih programa (datoteke .c) napišite korištenjem joe editora.
+U prvom slučaju poruka se ispisuje iz glavnog programa. U drugom, funkcija koja ispisuje samu poruku nalazi se u zasebnoj datoteci izvornog koda (koristite se `.h` datotekom da ih povežete). Izvorni kod svih programa (datoteke .c) napišite korištenjem `joe` editora.
 
-Vježbu napravite na slijedeći način:
+Nakon što ste napislati ta dva programa potrebno je napisati `makefile` u kojem ćete automatizirati proces prevođenja i izvršavanja vaših programa i to na dva načina:
+1. Prevođenje i povezivanje prvog (i drugog; dakle bit će 2 pravila, jedno za svaki program) porgrama korištenjem datoteka objektnog koda (`.o` datoteke)
+2. Prevođenje i povezivanje prvog (i drugog; dakle bit će 2 pravila, jedno za svaki program) programa korištenjem datoteka izvornog koda (ulaz u `gcc` prevodioca, tj. `.c` datoteke)
 
+Sve što napišete testirajte, a eventualne grešake otklonite. U konačnici direktorij u kojem ste odradili vježbu komprimirajte u `.tar` datoteku te istu učitajte na elearning.
+
+___
 
 ## Upute 🧭
 
@@ -33,8 +38,8 @@ cd vjezba1
 ___
 
 Zadatak je da napišemo program (u c jeziku) koji ispisuje pozdravnu poruku na dva načina:
-<br>&nbsp;&nbsp;&nbsp;<b>1. način:</b> Pozdravna poruka se ispisuje iz glavnog programa
-<br>&nbsp;&nbsp;&nbsp;<b>2. način:</b> Pozdravna poruka se ispisuje iz funkcije koja se nalazi u drugom programu
+1. Pozdravna poruka se ispisuje iz glavnog programa
+2. Pozdravna poruka se ispisuje iz funkcije koja se nalazi u drugom programu
 
 ___
 
@@ -55,14 +60,28 @@ Nakon pisanja programa spremamo datoteku naredbama `CTRL` + `K` + `X`.
 
 ___
 
-Sada nam se u driektoriju `vjezba1` nalazi datoteka `prvi.c`. Ona nije spremna za izvršavanje jer ju prvo treba kompajlirati, a to radimo na sljedeći način:
+Sada nam se u driektoriju `vjezba1` nalazi datoteka `prvi.c`. Ona nije spremna za izvršavanje jer je prvo treba prevesti pomoću `gcc` prevodioca, a to radimo na sljedeći način:
 
 ``` bash
-gcc prvi.c -Wall
+gcc -Wall prvi.c 
 ```
-Argument `-Wall` uključuje ispisivanje grešaka na naredbenu traku u slučaju da u vašem programu postoje greške.
+Argument `-Wall` uključuje ispisivanje upozorenja na naredbenu traku u slučaju da u vašem programu postoje greške. `gcc` predstavlja "GNU Compiler Collection", što je skup programerskih prevoditelja koji je nastao iz GNU projekta.
 
-Nakon izvršavanja gornje naredbe dobit ćemo izvršnu datoteku `a.out` (a je defaultno ime, da smo htjeli postaviti neko svoje ime toj datoteci koristili bi argument `-o naše_ime`).
+Nakon izvršavanja gornje naredbe dobit ćemo izvršnu datoteku `a.out`. `a` je zadano (default) ime, da smo htjeli postaviti neko svoje ime toj datoteci koristili bismo:
+
+``` bash
+gcc -Wall prvi.c -o prvi
+```
+`a.out` i `prvi` su identične datoteke.
+
+Valja naglasiti se ovdje postupak prevođenja i povezivanja izveo zajedno, ako pak želimo ta dva postupka možemo razdvojiti na sljedeći načina:
+
+``` bash
+gcc -Wall -c prvi.c
+gcc -Wall prvi.o -o prvi
+```
+
+Kod stvaranje izvršne datoteke (executable), automatski se postavljaju prava pristupa koja omogućavaju pokretanje datoteke, ako izvršite naredbu `ls -a` mozete vidjeti koja su to prava.
 
 ___
 
@@ -71,17 +90,23 @@ Kako bismo izvršili naš program potrebno je napraviti sljedeće:
 ``` bash
 ./a.out
 ```
+
+ili
+
+``` bash
+./prvi
+```
 ___
 
 ### 2. NAČIN
 
 Drugi način je da se pozdravna poruka ispiše iz funkcije koja je u drugoj datoteci.
 
-Za počeeak pomoću `joe` editora stvorimo novu datoteku `drugi.c` i u nju upišimo:
+Za počeeak pomoću `joe` editora stvorimo novu datoteku `drugi.c` i u nju upisujemo:
 
 ``` c
 #include <stdio.h>
-#include "hello.c"
+#include "hello.h"
 
 int main() {
    hello();
@@ -89,7 +114,7 @@ int main() {
 }
 ```
 
-Vidite odmah da se u glavnoj (main) funkciji poziva funkcija koju nismo definirali u tom programu, no također vidite i da smo na vrhu uključili i jednu `.c` datoteku. Upravo iz te datoteke pozivamo funkciju `hello()`.
+Vidite odmah da se u glavnoj (main) funkciji poziva funkcija koju nismo definirali u tom programu, no također vidite i da smo na vrhu uključili i jednu `.h` datoteku. Upravo nam ta datoteka omogućuje korištenje funkcije `hello()`.
 
 ___
 
@@ -104,7 +129,7 @@ void hello() {
 ```
 ___
 
-Međutim, nećemo tek tako uključiti `hello.c` datoteku u naš glavni program već ćemo napisati `header` datoteku (`hello.h`) i to na slijedeći način:
+Mi smo u naš program uključili datoteku zaglavlja `hello.h`. Ona nam omogućuje da u `drugi.c` programu koristimo funkciju `hello()` definiranu u `hello.c` datoteci. Pišemo je na sljedeći način:
 
 ``` c
 #ifndef HEADER_FILE /* Include guard */
@@ -114,6 +139,11 @@ void hello(); /* Function declaration */
 
 #endif
 ```
+Na početku uključujemo nešto što se zove guard (linije `#ifndef`, `#define` i `#endif`). On u srži radi sljedeće: Ako ono što je obgrljeno ovim linijama nije već definirano tj. uključeno u naš `c` program, uključit sav kod koji ne nalazi između linija `#ifndef`, `#define` i `#endif`. Na ovaj način je osigurano da se `.h` datoteka ne uključi (include) u program više puta, a to znači da možemo i ne moramo koristiti te tri linije, no imajte na umu da ne korištenje istih može izazvati greške u vašem kodu ako slučajno više puta uključite isto zaglavlje.
+
+Unutar zaglavlja je dovoljno samo deklarirati funkciju, zbog čega tu samo i piše: `void hello();`.
+
+Sada kada smo napisali funkciju `hello.c` i zaglavlje `hello.h` pokazat ćemo kako isto zaglavlje uključiti u program iz prethodnog potpoglavlja (vidi kod ispod).
 
 ___
 
@@ -141,17 +171,17 @@ void hello() { /* Function definition */
 ```
 ___
 
-Kompajliranje je slično kao i u prvom slučaju:
+Kompajliranje je slično kao i u prvom slučaju, samo što ovdje nabrajamo sve `.c` datoteke:
 
 ``` bash
-gcc -o drugi drugi.c hello.c -Wall
+gcc -Wall drugi.c hello.c -o drugi
 ```
 ___
 
 I na kraju pokrenemo program s:
 
 ``` bash
-./drugi.out
+./drugi
 ```
 ___
 
@@ -343,8 +373,4 @@ make ime_pravila_kojeg_smo_definirali
 ```
 ___
 
-Pitanje: Zašto `make prvi` i `make drugi` baca grešku? Kako to ispraviti?
-
-___
-
-Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba1` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa).
+Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba1` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
