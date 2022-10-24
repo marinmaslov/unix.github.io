@@ -344,6 +344,7 @@ make ime_pravila_kojeg_smo_definirali
 ___
 
 Pitanje: Zašto `make prvi` i `make drugi` baca grešku? Kako to ispraviti?
+
 ___
 
 Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba1` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa).
