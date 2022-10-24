@@ -107,10 +107,10 @@ ___
 Međutim, nećemo tek tako uključiti `hello.c` datoteku u naš glavni program već ćemo napisati `header` datoteku (`hello.h`) i to na slijedeći način:
 
 ``` c
-#ifndef HEADER_FILE
+#ifndef HEADER_FILE /* Include guard */
 #define HEADER_FILE
 
-void hello();
+void hello(); /* Function declaration */
 
 #endif
 ```
@@ -122,10 +122,10 @@ Sada prepravimo `drugi.c` i `hello.c` na sljedeći način:
 `drugi.c`:
 ```c
 #include <stdio.h>
-#include "hello.h"
+#include "hello.h"  /* Include the header here, to obtain the function declaration */
 
 int main() {
-   hello();
+   hello(); /* Use the function here */
    return 0;
 }
 ```
@@ -133,9 +133,9 @@ int main() {
 `hello.c`:
 ```c
 #include <stdio.h>
-#include "hello.h"
+#include "hello.h" /* Include the header (not strictly necessary here) */
 
-void hello() {
+void hello() { /* Function definition */
    printf("Hello, World!");
 }
 ```
