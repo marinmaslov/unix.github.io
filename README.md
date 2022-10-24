@@ -231,11 +231,9 @@ Sada ćemo definirati pravilo za sljedeće:
 - prevođenje i povezivanje porgrama prvi i drugi korištenjem datoteka objektnog koda [`.o` datoteke]
 - prevođenje i povezivanje programa prvi i drugi korištenjem datoteka izvornog koda (ulaz u `gcc` prevodioca [`.c` datoteke])
 
+___
 
-
-
-
-
+Dopišimo (u datoteku makefile) za početak pravila za prevođenje i povezivanje porgrama prvi i drugi korištenjem datoteka objektnog koda:
 
 ``` bash
 CC = /usr/bin/gcc
@@ -246,22 +244,102 @@ default: drugi
 all: $(TARGETS)
 
 prvi: prvi.o
-  $(CC) $(CFLAGS) prvi.o -o prvi
-
-prvi2: prvi.c
-  $(CC) $(CFLAGS) prvi.c -o prvi2
-
+   $(CC) $(CFLAGS) prvi.o -o prvi
+   
 drugi: drugi.o hello.o
-  $(CC) $(CFLAGS) drugi.o hello.o -o drugi
+   $(CC) $(CFLAGS) drugi.o hello.o -o drugi
+```
 
+___
+
+Dopišimo i pravila za prevođenje i povezivanje programa prvi i drugi korištenjem datoteka izvornog koda:
+
+``` bash
+CC = /usr/bin/gcc
+CFLAGS = -Wall
+TARGETS = prvi prvi2 drugi drugi2
+
+default: drugi
+all: $(TARGETS)
+
+prvi: prvi.o
+   $(CC) $(CFLAGS) prvi.o -o prvi
+   
+drugi: drugi.o hello.o
+   $(CC) $(CFLAGS) drugi.o hello.o -o drugi
+   
+prvi1: prvi.c
+   $(CC) $(CFLAGS) prvi.c -o prvi2
+   
 drugi2: drugi.c hello.c
-  $(CC) $(CFLAGS) drugi.c hello.c \
-  -o $(BIN)/drugi2
+   $(CC) $(CFLAGS) drugi.c hello.c \
+   -o $(BIN)/drugi2
+```
 
+___
+
+Na kraju moramo dodati proceduru za brisanje privremenih, objektnih i izvršnih datoteka, jer ne želimo nikakav `trash` (smeće) u našoj mapi koje bi nam moglo poremetiti buduća izvršavanja:
+
+``` bash
+CC = /usr/bin/gcc
+CFLAGS = -Wall
+TARGETS = prvi prvi2 drugi drugi2
+
+default: drugi
+all: $(TARGETS)
+
+prvi: prvi.o
+   $(CC) $(CFLAGS) prvi.o -o prvi
+   
+drugi: drugi.o hello.o
+   $(CC) $(CFLAGS) drugi.o hello.o -o drugi
+   
+prvi1: prvi.c
+   $(CC) $(CFLAGS) prvi.c -o prvi2
+   
+drugi2: drugi.c hello.c
+   $(CC) $(CFLAGS) drugi.c hello.c \
+   -o $(BIN)/drugi2
+   
 clean:
-  rm -f *.o *~ a.out $(TARGETS)
+   rm -f *.o*~ a.out $(TARGETS)
+```
+
+te implicitno pravilo za prevođenje datoteka `C` izvornog koda u objektne datoteke `.o`:
+
+``` bash
+CC = /usr/bin/gcc
+CFLAGS = -Wall
+TARGETS = prvi prvi2 drugi drugi2
+
+default: drugi
+all: $(TARGETS)
+
+prvi: prvi.o
+   $(CC) $(CFLAGS) prvi.o -o prvi
+   
+drugi: drugi.o hello.o
+   $(CC) $(CFLAGS) drugi.o hello.o -o drugi
+   
+prvi1: prvi.c
+   $(CC) $(CFLAGS) prvi.c -o prvi2
+   
+drugi2: drugi.c hello.c
+   $(CC) $(CFLAGS) drugi.c hello.c \
+   -o $(BIN)/drugi2
+   
+clean:
+   rm -f *.o*~ a.out $(TARGETS)
+   
 .c.o:
-  $(CC) $(CFLAGS) -c $<
+   $(CC) $(CFLAGS) -c $<
+```
+___
+
+Sada pokušajte izvršiti neko pravilo korištenjem sljedeće naredbe:
+
+``` bash
+make ime_pravila_kojeg_smo_definirali
 ```
 ___
 
