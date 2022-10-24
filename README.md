@@ -99,7 +99,7 @@ Sada ćemo napisati hello program:
 #include <stdio.h>
 
 void hello() {
-   printf("Hello, World!");
+   printf("Hello, World!\n");
 }
 ```
 ___
@@ -136,7 +136,7 @@ int main() {
 #include "hello.h" /* Include the header (not strictly necessary here) */
 
 void hello() { /* Function definition */
-   printf("Hello, World!");
+   printf("Hello, World!\n");
 }
 ```
 ___
@@ -321,7 +321,7 @@ prvi: prvi.o
 drugi: drugi.o hello.o
    $(CC) $(CFLAGS) drugi.o hello.o -o drugi
    
-prvi1: prvi.c
+prvi2: prvi.c
    $(CC) $(CFLAGS) prvi.c -o prvi2
    
 drugi2: drugi.c hello.c
