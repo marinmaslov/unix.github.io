@@ -132,6 +132,7 @@ int main() {
 
 `hello.c`:
 ```c
+#include <stdio.h>
 #include "hello.h"
 
 void hello() {
@@ -140,17 +141,10 @@ void hello() {
 ```
 ___
 
-Kompajliranje je isto kao i u prvom slučaju:
+Kompajliranje je slično kao i u prvom slučaju:
 
 ``` bash
-gcc prvi.c -Wall
-```
-___
-
-Imajte na umu da će ovo prebrisati postojeću `a.out` datoteku, te će ona sada predstavljati izvršnu datoteku za `prvi.c`. Ako želimo izbjeći prebrisavanje, onda dodijelimo neko drugo ime na sljedeći način:
-
-``` bash
-gcc prvi.c -Wall -o drugi
+gcc -o drugi drugi.c hello.c -Wall
 ```
 ___
 
@@ -161,7 +155,7 @@ I na kraju pokrenemo program s:
 ```
 ___
 
-Sve što nam preostaje je stvoriti `Makefile` datoteku u kojoj ćemo pravilima povezati izvršavanje ovih dvako programa.
+Sve što nam preostaje je stvoriti `Makefile` datoteku u kojoj ćemo pravilima povezati prevođenje i izvršavanje ovih dvaju programa.
 
 ``` bash
 CC = /usr/bin/gcc
