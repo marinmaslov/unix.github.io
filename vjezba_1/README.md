@@ -202,13 +202,13 @@ ___
 
 #### Make varijable
 
-Varijable se definiraju korištenjem znaka `$` ispred imena varijable koje se nalazi u zagradama.
+Varijable se definiraju VELIKIM slovima.
 
 ``` bash
 VARIJABLA = nekakav_string
 ```
 
-Pozivanje varijable:
+Pozivanje varijable vrši se korištenjem znaka `$` ispred imena varijable koje se nalazi u zagradama:
 
 ``` bash
 $(VARIJABLA)
