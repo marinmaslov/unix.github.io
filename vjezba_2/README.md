@@ -4,7 +4,7 @@
 
 U okviru vježbe proučite [primjere](primjeri/README.md) programskog koda (c jezik) za preuzimanje argumenata naredbenog retka i čitanje datoteke.
 
-Otvorite svoj `home` direktorij te se pozicionirajte u `unix` direktorij (stvoren u prethodnim vježbama) te stvorite direktorij imena `vjezba2`. U direktoriju `vjezba2`isprogramirajte zadane primjere te za iste napišite `Makefile`datoteku s pravilima za prevođenje i povezivanje.
+Otvorite svoj `home` direktorij te se pozicionirajte u `unix` direktorij (stvoren u prethodnim vježbama) te stvorite direktorij imena `vjezba2`. U direktoriju `vjezba2` isprogramirajte zadane primjere te za iste napišite `Makefile` datoteku s pravilima za prevođenje i povezivanje.
 
 Drugi primjer preradite na način da se kao argument može zadati više datoteka. Program otvara datoteke redom kojim su navedene i ispisuje ih. Dopunite `Makefile`datoteku s pravilom za prevođenje ovog primjera.
 
@@ -13,6 +13,45 @@ Slobodno se koristite i uputama od prethodne vježbe.
 ___
 
 ## Upute 🧭
+
+### 1. korak: Stvaranje `Makefile`datoteke s pravilima za prevođenje i povezivanje
+
+Potrebno je napraviti 3 pravila: `prvi`, `drugi` i `treci`.
+
+Kako se pišu `Makefile` i popratna pravila pogledajte u [vježbi 1](../vjezba_1/README.md).
+
+## 2. korak: Izvršavanje pravila `prvi`, `drugi` i `treci`
+
+Nakon što ste napisali pravila u vašu `Makefile` datoteku, vrijeme je da ih izvršite i time prevedete i povežete vaše programe.
+
+Ako je sve prošlo uspješno programe možete izvršiti i to na sljedeći način:
+
+### `prvi`
+
+Prvi program ispisuje sve argumente koji mu se proslijede. Izvršite ga tako da mu proslijedite neke vaše proizvoljne argumente, npr.:
+
+```bash
+./prvi argument1 argument2 argument3
+```
+
+Ispis za gornji primjer će biti sljedeći:
+
+```bash
+argv[0]: ./prvi
+argv[1]: argument1
+argv[2]: argument2
+argv[3]: argument3
+```
+
+Primijetite da se kao 0. argument ispisuje `./prvi`jer je i on argument naredbenog retka.
+
+### `drugi`
+
+### `treci`
+
+
+
+
 
 Za početak se pozicionirajmo u `unix` direktorij.
 
