@@ -26,7 +26,7 @@ Nakon što ste napisali pravila u vašu `Makefile` datoteku, vrijeme je da ih iz
 
 Ako je sve prošlo uspješno programe možete izvršiti i to na sljedeći način:
 
-#### Pravilo `prvi`
+#### 📗 Pravilo `prvi`
 
 Naredba:
 
@@ -40,7 +40,7 @@ Ispis:
 /usr/bin/gcc -Wall prvi.c -o prvi
 ```
 
-#### Pravilo `drugi`
+#### 📘 Pravilo `drugi`
 
 Naredba:
 
@@ -54,7 +54,7 @@ Ispis:
 /usr/bin/gcc -Wall drugi.c -o drugi
 ```
 
-#### Pravilo `treci`
+#### 📙 Pravilo `treci`
 
 Naredba:
 
@@ -86,7 +86,7 @@ Vidimo da su nam se stvorile izvršne datoteke `prvi`, `drugi` i `treci`. U nast
 
 ### 3. korak: Izvršavanje programa `prvi`, `drugi` i `treci`
 
-#### Izvršavanje programa `prvi`
+#### 📗 Izvršavanje programa `prvi`
 
 Prvi program ispisuje sve argumente koji mu se proslijede. Izvršite ga tako da mu proslijedite neke vaše proizvoljne argumente, npr.:
 
@@ -105,7 +105,7 @@ argv[3]: argument3
 
 Primijetite da se kao 0. argument ispisuje `./prvi` jer je i on argument naredbenog retka.
 
-#### Izvršavanje programa `drugi`
+#### 📘 Izvršavanje programa `drugi`
 
 Drugi program čita sadržaj datoteke i ispisuje ga. Ime datoteke se zadaje kao argument naredenog retka.
 
@@ -125,7 +125,7 @@ proslijedi
 kao argument!
 ```
 
-#### Izvršavanje programa `treci`
+#### 📙 Izvršavanje programa `treci`
 
 Treći program ima funkcionalnost UNIX naredbe cat. Program ispisuje sadržaj svih datoteka čija su imena zadana kao argumenti naredbenog retka. Ukoliko niti jedna datoteka nije zadana, program kopira standardni ulaz na standardni izlaz.
 
