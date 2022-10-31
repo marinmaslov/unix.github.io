@@ -16,17 +16,77 @@ ___
 
 ### 1. korak: Stvaranje `Makefile`datoteke s pravilima za prevođenje i povezivanje
 
-Potrebno je napraviti 3 pravila: `prvi`, `drugi` i `treci`.
+Potrebno je napraviti 3 pravila: `prvi`, `drugi` i `treci`. `Makefile` napišite sami!
 
-Kako se pišu `Makefile` i popratna pravila pogledajte u [vježbi 1](../vjezba_1/README.md).
+Poslužite se slobodno uputama za [vježbu 1](../vjezba_1/README.md).
 
-## 2. korak: Izvršavanje pravila `prvi`, `drugi` i `treci`
+### 2. korak: Izvršavanje pravila `prvi`, `drugi` i `treci`
 
 Nakon što ste napisali pravila u vašu `Makefile` datoteku, vrijeme je da ih izvršite i time prevedete i povežete vaše programe.
 
 Ako je sve prošlo uspješno programe možete izvršiti i to na sljedeći način:
 
-### `prvi`
+#### Pravilo `prvi`
+
+Naredba:
+
+```bash
+make prvi
+```
+
+Ispis:
+```bash
+/usr/bin/gcc -Wall -c prvi.c
+/usr/bin/gcc -Wall prvi.c -o prvi
+```
+
+#### Pravilo `drugi`
+
+Naredba:
+
+```bash
+make drugi
+```
+
+Ispis:
+```bash
+/usr/bin/gcc -Wall -c drugi.c
+/usr/bin/gcc -Wall drugi.c -o drugi
+```
+
+#### Pravilo `treci`
+
+Naredba:
+
+```bash
+make treci
+```
+
+Ispis:
+```bash
+/usr/bin/gcc -Wall -c treci.c
+/usr/bin/gcc -Wall treci.c -o treci
+```
+
+Nakon uspješnog izvršavanja svih pravila, u direktoriju ćete imati sljedeće datoteke:
+```bash
+-rwxr-xr-x 1 mmaslo00 stud 7711 Oct 31 18:36 drugi
+-rw-r--r-- 1 mmaslo00 stud  667 Oct 31 18:31 drugi.c
+-rw-r--r-- 1 mmaslo00 stud 2120 Oct 31 18:36 drugi.o
+-rw-r--r-- 1 mmaslo00 stud  317 Oct 31 18:34 makefile
+-rwxr-xr-x 1 mmaslo00 stud 6832 Oct 31 18:34 prvi
+-rw-r--r-- 1 mmaslo00 stud  153 Oct 31 18:30 prvi.c
+-rw-r--r-- 1 mmaslo00 stud 1552 Oct 31 18:34 prvi.o
+-rw-r--r-- 1 mmaslo00 stud   74 Oct 31 18:31 test.txt
+-rwxr-xr-x 1 mmaslo00 stud 7542 Oct 31 18:36 treci
+-rw-r--r-- 1 mmaslo00 stud  546 Oct 31 18:31 treci.c
+-rw-r--r-- 1 mmaslo00 stud 2032 Oct 31 18:36 treci.o
+```
+Vidimo da su nam se stvorile izvršne datoteke `prvi`, `drugi` i `treci`. U nastavku ćemo ih izvršiti (naravno, s argumentima).
+
+### 3. korak: Izvršavanje programa`prvi`, `drugi` i `treci`
+
+#### Izvršavanje programa `prvi`
 
 Prvi program ispisuje sve argumente koji mu se proslijede. Izvršite ga tako da mu proslijedite neke vaše proizvoljne argumente, npr.:
 
@@ -34,7 +94,7 @@ Prvi program ispisuje sve argumente koji mu se proslijede. Izvršite ga tako da 
 ./prvi argument1 argument2 argument3
 ```
 
-Ispis za gornji primjer će biti sljedeći:
+Ispis za ovaj primjer će biti sljedeći:
 
 ```bash
 argv[0]: ./prvi
@@ -45,11 +105,49 @@ argv[3]: argument3
 
 Primijetite da se kao 0. argument ispisuje `./prvi`jer je i on argument naredbenog retka.
 
-### `drugi`
+#### Izvršavanje programa `drugi`
 
-### `treci`
+Drugi program čita sadržaj datoteke i ispisuje ga. Ime datoteke se zadaje kao argument naredenog retka.
 
+```bash
+./drugi test.txt
+```
 
+Ispis za ovaj primjer će biti sljedeći:
+
+```bash
+Ovaj program
+ispisuje
+linije
+datoteke
+koja mu se
+proslijedi
+kao argument!
+```
+
+#### Izvršavanje programa `treci`
+
+Treći program ima funkcionalnost UNIX naredbe cat. Program ispisuje sadržaj svih datoteka čija su imena zadana kao argumenti naredbenog retka. Ukoliko niti jedna datoteka nije zadana, program kopira standardni ulaz na standardni izlaz.
+
+Iz direktorija s primjerima ste kopirali `test.txt`, dodatne datoteke (minimalno dvije) napravite sami.
+
+```bash
+./treci test.txt
+```
+
+Ispis za ovaj primjer će biti sljedeći:
+
+```bash
+Ovaj program
+ispisuje
+linije
+datoteke
+koja mu se
+proslijedi
+kao argument!
+
++ sadržaj vaših datoteka
+```
 
 
 
