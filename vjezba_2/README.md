@@ -103,7 +103,7 @@ argv[2]: argument2
 argv[3]: argument3
 ```
 
-Primijetite da se kao 0. argument ispisuje `./prvi`jer je i on argument naredbenog retka.
+Primijetite da se kao 0. argument ispisuje `./prvi` jer je i on argument naredbenog retka.
 
 #### Izvršavanje programa `drugi`
 
@@ -153,10 +153,7 @@ kao argument!
 
 Drugi primjer preradite na način da se kao argument može zadati više datoteka. Program otvara datoteke redom kojim su navedene i ispisuje ih. Dopunite Makefile datoteku sa pravilom za prevođenje ovog primjera.
 
-#### Prepravljanje programa da kao argument može primiti više datoteka
-
-
-
+Napomena: Ne uređujte datoteku `drugi.c` već kopirajte istu te uređujte kopiju (kopiju nazovite `drugi2.c`).
 
 ___
 
