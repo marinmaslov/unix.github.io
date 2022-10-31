@@ -2,7 +2,7 @@
 
 # Zadatak 📋
 
-U okviru vježbe proučite [primjere](vjezba_2/primjeri/README.md) programskog koda (c jezik) za preuzimanje argumenata naredbenog retka i čitanje datoteke.
+U okviru vježbe proučite [primjere](primjeri/README.md) programskog koda (c jezik) za preuzimanje argumenata naredbenog retka i čitanje datoteke.
 
 Otvorite svoj `home` direktorij te se pozicionirajte u `unix` direktorij (stvoren u prethodnim vježbama) te stvorite direktorij imena `vjezba2`. U direktoriju `vjezba2`isprogramirajte zadane primjere te za iste napišite `Makefile`datoteku s pravilima za prevođenje i povezivanje.
 
