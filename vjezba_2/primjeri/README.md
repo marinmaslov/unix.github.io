@@ -7,9 +7,12 @@ Kod pokretanja programa, ljuska iz koje se program pokreće može funkciji main 
 - `char *argv[ ]`: argumenti naredbenog retka
 
 Kako ne bi gubili vrijeme na prepisivanje danih primjera, možete ih kopirati u svoj direktorij `vježba2` (dakle naredbe izvršite dok se nalazite u vašem direktoriju `vjazba2`) pomoću naredbi:
-- `cp /home/mmaslo00/vjezba2/primjeri/primjer1.c primjer1.c`
-- `cp /home/mmaslo00/vjezba2/primjeri/primjer2.c primjer2.c`
-- `cp /home/mmaslo00/vjezba2/primjeri/primjer3.c primjer3.c`
+- `cp /home/mmaslo00/vjezba2/primjeri/prvi.c prvi.c`
+- `cp /home/mmaslo00/vjezba2/primjeri/drugi.c drugi.c`
+- `cp /home/mmaslo00/vjezba2/primjeri/treci.c treci.c`
+
+Također kopirajte i `test.txt` koju ćete koristiti u programu `drugi.c`:
+- `cp /home/mmaslo00/vjezba2/primjeri/test.txt test.txt`
 
 ___
 # Primjer 1. 📋
