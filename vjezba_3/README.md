@@ -17,11 +17,13 @@ Nakon toga napišite `Makefile` datoteku sa <b>pravilima</b> za prevođenje i po
 U konačnici direktorij `vjezba3` u kojem se nalaze svi vaši programi i `Makefile` datoteka komprimirajte u `.tar` datoteku te istu učitajte na elearning.
 
 Za sve koji nisu stigli rješiti 3. i 4. zadatak, rješenja možete pronaći ovdje: - [RJEŠENJA](rjesenja/README.md)
+
 ___
 
 ## Upute 🧭
 
 Slobodno se koristite i uputama od prethodnih vježbi!
+
 ___
 
 Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba3` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
