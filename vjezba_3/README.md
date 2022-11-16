@@ -15,6 +15,8 @@ Zadatak ove vježbe je napraviti 4 programa.
 Nakon toga napišite `Makefile` datoteku sa <b>pravilima</b> za prevođenje i povezivanje za sva 4 programa.
 
 U konačnici direktorij `vjezba3` u kojem se nalaze svi vaši programi i `Makefile` datoteka komprimirajte u `.tar` datoteku te istu učitajte na elearning.
+
+Za sve koji nisu stigli rješiti 3. i 4. zadatak, rješenja možete pronaći ovdje: - [RJEŠENJA](rjesenja/README.md)
 ___
 
 ## Upute 🧭
