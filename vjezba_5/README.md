@@ -70,6 +70,7 @@ int main(int argc, char *argv[]) {
 Osim gornjeg programa potrebno je napisati (sami) i `hello.c` program koji u glavnoj funkciji ispisuje "Hello World!".
 
 ### `program2.c`
+U ovom primjeru kao argument naredbenog retka može biti zadana proizvoljna naredba sa svojim argumentima. Funkcijom fork() stvara se novi proces, nakon čega se memorijska slika child procesa funkcijom execvp() zamjenjuje novim programom. Funkcija execvp() argumente naredbenog retka preuzima u obliku polja pokazivača, na način na koji ih funkcija main u novopokrenutom programu i prima. U našem slučaju, ime programa je drugi argument naredbenog retka (argv[1] - odmah iza naredbe kojom pozivamo program), a polke pokazivača koji se proslijeđuju kao argumenti funkcije main novopokrenutog programa započinje na adresi &argv[1]. Na ovaj način, novopokrenutom programu se proslijeđuje lista argumenata naredbenog retka bez obzira na njihov broj.
 
 ``` c
 #include <stdio.h>
