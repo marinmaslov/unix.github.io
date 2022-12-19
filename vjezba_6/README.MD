@@ -101,11 +101,68 @@ int main(int argc, char **argv) {
 ___
 
 Ono što je preostalo je napraviti redirekciju ispisa u datoteku, a to radimo na sljedeći način:
+``` c
+#include <stdio.h>
+#include <unistd.h>
+#include <wait.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
+int cpid = 0;
 
+static void chld_handler(int signo) {
+        cpid = wait(NULL);
+}
+
+int main(int argc, char *argv[]) {
+        int fd;
+        int pid;
+
+        if(argc < 3) {
+                printf("Koristenje: %s ime_datoteke.out NAREDBA [argumenti] ...\n", argv[0]);
+                return 0;
+        }
+
+        fd = open(argv[1], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+
+        if(fd<0) {
+                perror("open");
+                return 0;
+        }
+
+        dup2(fd, STDOUT_FILENO);
+
+        if(fd != STDOUT_FILENO) {
+                close(fd);
+        }
+
+        signal(SIGCHLD, chld_handler);
+
+        pid = fork();
+
+        if(pid == -1) {
+                // ERROR
+                perror("fork");
+                return 0;
+        } else if(pid == 0) {
+                // CHILD
+                execvp(argv[2], &argv[2]);
+        }
+        
+        while(!cpid) {
+                pause();
+        }
+
+        printf("[PID %5d]: Terminated\n", cpid);
+
+        return 0;
+}
+
+```
 ___
 
-U nastavku napišite `Makefile` i pravilo `program` za prevođenje i povezivanje izmjenjenog programa.
+U nastavku napišite `Makefile` i pravilo `program` za prevođenje i povezivanje gornjeg programa.
 
 Nakon izvršavanja `make` pravila, testirajte vaš program s:
 
@@ -113,6 +170,23 @@ Nakon izvršavanja `make` pravila, testirajte vaš program s:
 ``` bash
 ./program ls.out ls -al
 ```
+___
 
+Otvorite ili `cat`-ajte datoteku `ls.out` da provjerite nalazi li se u njoj stvarno ispis naredbe `ls -al`. Ispis treba biti sljedeći:
+
+``` bash
+adria:~/vjezba6% ls -al
+total 28
+drwxr-xr-x  2 mmaslo00 stud 4096 Dec 19 13:59 .
+drwx--x--x 16 mmaslo00 stud 4096 Dec 19 13:59 ..
+-rw-------  1 mmaslo00 stud  293 Dec 19 13:56 ls.out
+-rw-r--r--  1 mmaslo00 stud    0 Dec 19 13:59 Makefile
+-rwxr-xr-x  1 mmaslo00 stud 8375 Dec 19 13:56 program
+-rw-r--r--  1 mmaslo00 stud  807 Dec 19 13:56 program.c
+```
+
+Ako je sve u redu, gotovi ste s vježbom!
+
+___
 
 Sve što vam preostaje je da kao i u prošloj vježbi napravite `.tar` datoteku od direktorija `vjezba5` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
