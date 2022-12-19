@@ -6,3 +6,4 @@ Popis vježbi:
 - [Vježba 3](vjezba_3/README.md)
 - [Vježba 4](vjezba_4/README.md)
 - [Vježba 5](vjezba_5/README.md)
+- [Vježba 6](vjezba_6/README.md)
