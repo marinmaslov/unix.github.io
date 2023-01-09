@@ -94,7 +94,7 @@ ___
 
 U nastavku napišite `Makefile` i pravilo `zadatak` za prevođenje i povezivanje gornjeg programa.
 
-Nakon izvršavanja `make` pravila, testirajte vaš program s:
+Nakon izvršavanja `make` pravila, testirajte vaš program:
 
 ``` bash
 ./zadatak list_dir <ime_direktorija>
