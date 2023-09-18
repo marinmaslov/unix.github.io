@@ -1,386 +1,230 @@
 # 🚀 Priprema za vježbe: Osnove korištenja UNIX ljuske
 
+# Sažetak 📃
+
+___
+
 # Zadatak 📋
-U okviru vježbe potrebno je napisati program koji ispisuje pozdravnu poruku, na dva načina.
+U okviru vježbe potrebno je spojiti se na `adria.fesb.hr` preko programa Putty.
 
-U prvom slučaju poruka se ispisuje iz glavnog programa. U drugom, funkcija koja ispisuje samu poruku nalazi se u zasebnoj datoteci izvornog koda (koristite se `.h` datotekom da ih povežete). Izvorni kod svih programa (datoteke .c) napišite korištenjem `joe` editora.
+Nakon uspješnog spajanja u svojem korisničkom direktoriju napravite direktorij `unix`˙(`~/unix`).
 
-Nakon što ste napislati ta dva programa potrebno je napisati `makefile` u kojem ćete automatizirati proces prevođenja i izvršavanja vaših programa i to na dva načina:
-1. Prevođenje i povezivanje prvog (i drugog; dakle bit će 2 pravila, jedno za svaki program) porgrama korištenjem datoteka objektnog koda (`.o` datoteke)
-2. Prevođenje i povezivanje prvog (i drugog; dakle bit će 2 pravila, jedno za svaki program) programa korištenjem datoteka izvornog koda (ulaz u `gcc` prevodioca, tj. `.c` datoteke)
+Na direktoriju `unix` postavite sljedeća prava pristupa:
+- <b>vlasnik:</b> sva prava pristupa
+- <b>grupa:</b> pravo čitanja i izvršavanja
+- <b>ostali:</b> pravo čitanja i izvršavanja
 
-Sve što napišete testirajte, a eventualne grešake otklonite. U konačnici direktorij u kojem ste odradili vježbu komprimirajte u `.tar` datoteku te istu učitajte na elearning.
+U direktoriju `unix` korištenjem `joe` editora stvorite datoteku `vjezba.txt`, te joj postavite sljedeća prava pristupa:
+- <b>vlasnik:</b> pravo čitanja i pisanja
+- <b>grupa:</b> pravo čitanja
+- <b>ostali:</b> pravo čitanja
+
+U datoteku `vjezba.txt` unesite sve naredbe korištene u ovoj vježbi.
+
+Konačno, direktorij u kojem ste odradili vježbu komprimirajte u .tar datoteku te istu učitajte na Merlin.
 
 ___
 
 ## Upute 🧭
-
-Za početak se pozicionirajmo u `unix` direktorij.
-
-To činimo na sljedeći način:
-```bash
-cd unix
 ```
-Napomena: `unix` direktorij se nalazi u vašem `home` direktoriju (putanja: `home/username`, kako biste se mogli pozicionirati u `unix` direktorij morate bili u vašem `home` direktoriju.
+💡 Kada znate naredbu, ali ne znate kako je koristiti možete se poslužiti s: man [naredba]
+```
+### 1. Korištenje programa Putty 💻
+napisat
 
-_____
-
-U nastavku stvaramo novi direktorij imena `vjezba1` i to na sljedeći način:
-
+### 2. Navigacija među direktorijima 🗂️
+Kada se preko Puttyja spojite na server bit ćete pozicioniran u svoj `home` direktorij:
 ``` bash
-mkdir vjezba1
+adria:~%
 ```
-Te se zatim pozicioniramo u isti:
-
+Kada niste sigurni gdje se trenutno nalazite, tj. u kojem ste direktoriju, možete koristiti naredbu `pwd`, koja će ispisati apsolutnu putanju direktorija u kojem se trenutno nalazite:
 ``` bash
-cd vjezba1
+adria:~% pwd
+/home/mmaslo00
 ```
-___
-
-Zadatak je da napišemo program (u c jeziku) koji ispisuje pozdravnu poruku na dva načina:
-1. Pozdravna poruka se ispisuje iz glavnog programa
-2. Pozdravna poruka se ispisuje iz funkcije koja se nalazi u drugom programu
-
-___
-
-### 1. NAČIN
-
-Pomoću `joe` editora stvaramo datoteku `prvi.c` u kojoj pišemo naš program:
-
-``` c
-#include <stdio.h>
-
-int main() {
-   printf("Hello, World!\n");
-   return 0;
-}
-```
-
-Nakon pisanja programa spremamo datoteku naredbama `CTRL` + `K` + `X`.
-
-___
-
-Sada nam se u driektoriju `vjezba1` nalazi datoteka `prvi.c`. Ona nije spremna za izvršavanje jer je prvo treba prevesti pomoću `gcc` prevodioca, a to radimo na sljedeći način:
-
+Za izlistavanje svih direktorija koji se nalaze u trenutnom direktoriju (u ovom slučaju `home`), možete koristiti naredbu `ls` ili `ls -l`.
+Naredba `ls` će izlistati direktorije:
 ``` bash
-gcc -Wall prvi.c 
+adria:~% ls
+Maildir      public_html2  unix.tar   vjezba2    vjezba3_1    vjezba6
+microGram    unix          vjezba1    vjezba2_2  vjezba3.tar  vjezba6_a
+public_html  unix1         vjezba1_2  vjezba3    vjezba5      vjezba7
 ```
-Argument `-Wall` uključuje ispisivanje upozorenja na naredbenu traku u slučaju da u vašem programu postoje greške. `gcc` predstavlja "GNU Compiler Collection", što je skup programerskih prevoditelja koji je nastao iz GNU projekta.
-
-Nakon izvršavanja gornje naredbe dobit ćemo izvršnu datoteku `a.out`. `a` je zadano (default) ime, da smo htjeli postaviti neko svoje ime toj datoteci koristili bismo:
-
+dok će naredba `ls -l` izlistati direktorije i dodatne informacije o njima (prava, broj datoteka/direktorija, vlasnika, grupu, veličinu, datum zadnjeg uređivanja i naziv):
 ``` bash
-gcc -Wall prvi.c -o prvi
+adria:~% ls -l
+total 148
+drwxr-xr-x 2 mmaslo00 stud  4096 Sep 12  2016 Maildir
+drwxr-xr-x 6 mmaslo00 stud  4096 Jan 20  2019 microGram
+drwxr-xr-x 2 mmaslo00 stud  4096 Jan 21  2019 public_html
+drwxr-xr-x 2 mmaslo00 stud  4096 Oct 18  2022 public_html2
+drwxr-xr-x 2 mmaslo00 stud  4096 Oct 18  2022 unix
+drwxr-xr-x 2 mmaslo00 stud  4096 Oct 18  2022 unix1
+-rw-r--r-- 1 mmaslo00 stud 10240 Oct 18  2022 unix.tar
+drwxr-xr-x 2 mmaslo00 stud  4096 Oct 25  2022 vjezba1
+drwxrwxrwx 2 mmaslo00 stud  4096 Oct 24  2022 vjezba1_2
+drwxr-xr-x 3 mmaslo00 stud  4096 Nov  8  2022 vjezba2
+drwxr-xr-x 2 mmaslo00 stud  4096 Nov  8  2022 vjezba2_2
+drwxr-xr-x 2 mmaslo00 stud  4096 Nov 15  2022 vjezba3
+drwxr-xr-x 2 mmaslo00 stud  4096 Nov 15  2022 vjezba3_1
+-rw-r--r-- 1 mmaslo00 stud 71680 Nov 15  2022 vjezba3.tar
+drwxr-xr-x 2 mmaslo00 stud  4096 Dec 12  2022 vjezba5
+drwxr-xr-x 2 mmaslo00 stud  4096 Dec 20  2022 vjezba6
+drwxr-xr-x 2 mmaslo00 stud  4096 Dec 19  2022 vjezba6_a
+drwxr-xr-x 3 mmaslo00 stud  4096 Jan 10  2023 vjezba7
 ```
-`a.out` i `prvi` su identične datoteke.
+"Ulazak" u i "izlazak" iz direktorija vrši se naredbom `cd`:
 
-Valja naglasiti se ovdje postupak prevođenja i povezivanja izveo zajedno, ako pak želimo ta dva postupka možemo razdvojiti na sljedeći načina:
-
+Ulazak `cd <ime_direktroija>`:
 ``` bash
-gcc -Wall -c prvi.c
-gcc -Wall prvi.o -o prvi
+adria:~% cd microGram/
+adria:~/microGram%
 ```
 
-Kod stvaranje izvršne datoteke (executable), automatski se postavljaju prava pristupa koja omogućavaju pokretanje datoteke, ako izvršite naredbu `ls -a` mozete vidjeti koja su to prava.
-
-___
-
-Kako bismo izvršili naš program potrebno je napraviti sljedeće:
-
+Izlazak `cd ..`:
 ``` bash
-./a.out
+adria:~/microGram% cd ..
+adria:~%
 ```
 
+### 3. Stvaranje i brisanje direktorija 📁
+
+Direktoriji se na UNIX okruženjima stvaraju korištenjem `mkdir` naredbe na sljedeći način:
+``` bash
+mkdir <ime_direktroija>
+```
+Primjer:
+``` bash
+adria:~% mkdir test1
+adria:~%
+```
+Provjera je li direktroij stvoren:
+``` bash
+adria:~% ls
+Maildir      public_html2  unix1     vjezba1_2  vjezba3      vjezba5    vjezba7
+microGram    test1         unix.tar  vjezba2    vjezba3_1    vjezba6
+public_html  unix          vjezba1   vjezba2_2  vjezba3.tar  vjezba6_a
+```
+Vidimo da postoji direktorij `test1`.
+
+Brisanje direktorija (i datoteka) se vrši korištenjem naredba `rm` uz argument `-rf` (za datoteke nije potreban taj argument).
+``` bash
+adria:~% rm -rf test1/
+adria:~%
+```
+### 4. Stvaranje i brisanje datoteka 📃
+Datoteke se mogu stvoriti na više načina. Osnovna naredba za stvaranje datoteka je `touch`:
+``` bash
+touch <ime_datoteke>.<ekstenzija>
+```
+Osim korištenja naredbe `touch` za stvaranje datoteka možete koristiti i razne editore koji su vam na okruženju dostupni (vim, nano, joe). Kroz vježbe će koristit `joe` editor pa ćemo pomoću njega pokazati primjer:
+``` bash
+joe <ime_datoteke>.<ekstenzija>
+```
+Kada izvršite ovu naredbu otvorit će vam se joe editor, te u datoteku možete upisati što želite. Kako biste spremili promjene i izašli iz joe editora pritisnite `ctrl` + `K` + `X` (odjednom).
+
+❗ Naglasak:
+
+Naredba:
+``` bash
+joe <ime_datoteke>.<ekstenzija>
+```
+ne služi samo za stvaranje datoteka, to je naredba za otvaranje datoteka u joe editoru, no u slučaju kad datoteka ne postoji joe će je i stvoriti prilikom spremanja. To znači da ako datoteku stvorite pomoću `touch` naredbe, možete je otvoriti i u nju pisati pomoću `joe` naredbe.
+
+Brisanje datoteka je slično brisanju direktorija samo što nije potrebno dodavati argument `-rf`:
+``` bash
+adria:~% rm test1
+adria:~%
+```
+
+### 5. Postavljanje prava na datoteke / direktorije ⛔
+Prava na datoteke i direktorije se dodaju korištenjem naredbe `chmod` na 2 načina:
+
+#### 1. Način
+``` bash
+chmod [V][G][O] <ime_datoteke>
 ili
+chmod [V][G][O] <ime_direktroija> -R
+```
+Primijetite da direktorij (ako nije prazak) zahtijeva argument `-R`, slično kao i kod brisanja direktroija (`-rf`). Taj argument naznačava da je potrbno naredbu rekurzivno izvršiti nad svim datotekama i direktorijima koji se nalaze u trenutnom dirketorij (tj. onom nad kojim vršimo naredbu).
 
+`[V][G][O]` su 3 broja čije značenje slijedi:
+- `V` (prvi broj): prava vezana za vlasnika
+- `G` (drugi broj): prava vezana za grupu
+- `O` (treći broj): prava vezana za ostale
+
+Brojevi se određuju prema sljedećoj tablici:
+
+| # | Prava                          | rwx |
+|---|--------------------------------|-----|
+| 0 | ništa                          | 000 |
+| 1 | samo izvršavanj                | 001 |
+| 2 | samo pisanje                   | 010 |
+| 3 | pisanje i izvršavanje          | 011 |
+| 4 | samo čitanje                   | 100 |
+| 5 | čitanje i izvršavanje          | 101 |
+| 6 | čitanje i pisanje              | 110 |
+| 7 | čitanje, pisanje i izvršavanje | 111 |
+
+Dakle, dekadski broj se određuje preko binarnog gdje su tri znamenke binarnog broja zapravo prikaz r (read), w (write) i x (execute) prava. Ovisno o pozicijama 0 i 1 poznato je koja su prava u pitanju.
+
+Primjer:
 ``` bash
-./prvi
+chmod 720 test.txt
 ```
-___
+Naredba poviše postavlja sljedeća prava:
+- vlasnik: čitanje, pisanje i izvršavanje
+- grupa: samo pisanje
+- ostali: ništa
 
-### 2. NAČIN
-
-Drugi način je da se pozdravna poruka ispiše iz funkcije koja je u drugoj datoteci.
-
-Za počeeak pomoću `joe` editora stvorimo novu datoteku `drugi.c` i u nju upisujemo:
-
-``` c
-#include <stdio.h>
-#include "hello.h"
-
-int main() {
-   hello();
-   return 0;
-}
-```
-
-Vidite odmah da se u glavnoj (main) funkciji poziva funkcija koju nismo definirali u tom programu, no također vidite i da smo na vrhu uključili i jednu `.h` datoteku. Upravo nam ta datoteka omogućuje korištenje funkcije `hello()`.
-
-___
-
-Sada ćemo napisati hello program:
-
-``` c
-#include <stdio.h>
-
-void hello() {
-   printf("Hello, World!\n");
-}
-```
-___
-
-Mi smo u naš program uključili datoteku zaglavlja `hello.h`. Ona nam omogućuje da u `drugi.c` programu koristimo funkciju `hello()` definiranu u `hello.c` datoteci. Pišemo je na sljedeći način:
-
-``` c
-#ifndef HEADER_FILE /* Include guard */
-#define HEADER_FILE
-
-void hello(); /* Function declaration */
-
-#endif
-```
-Na početku uključujemo nešto što se zove guard (linije `#ifndef`, `#define` i `#endif`). On u srži radi sljedeće: Ako ono što je obgrljeno ovim linijama nije već definirano tj. uključeno u naš `c` program, uključit sav kod koji ne nalazi između linija `#ifndef`, `#define` i `#endif`. Na ovaj način je osigurano da se `.h` datoteka ne uključi (include) u program više puta, a to znači da možemo i ne moramo koristiti te tri linije, no imajte na umu da ne korištenje istih može izazvati greške u vašem kodu ako slučajno više puta uključite isto zaglavlje.
-
-Unutar zaglavlja je dovoljno samo deklarirati funkciju, zbog čega tu samo i piše: `void hello();`.
-
-Sada kada smo napisali funkciju `hello.c` i zaglavlje `hello.h` pokazat ćemo kako isto zaglavlje uključiti u program iz prethodnog potpoglavlja (vidi kod ispod).
-
-___
-
-Sada prepravimo `drugi.c` i `hello.c` na sljedeći način:
-
-`drugi.c`:
-```c
-#include <stdio.h>
-#include "hello.h"  /* Include the header here, to obtain the function declaration */
-
-int main() {
-   hello(); /* Use the function here */
-   return 0;
-}
-```
-
-`hello.c`:
-```c
-#include <stdio.h>
-#include "hello.h" /* Include the header (not strictly necessary here) */
-
-void hello() { /* Function definition */
-   printf("Hello, World!\n");
-}
-```
-
-Primijetimo da ovdje `.h` datoteka nije obgrljena znakovima `<` i `>` već se nalazi u navodnicima. Razlog tome je što se naše `hello.h` zaglavlje ne nalazi u standardnom direktoriju svih `c/c++` zaglavlja.
-___
-
-Kompajliranje je slično kao i u prvom slučaju, samo što ovdje nabrajamo sve `.c` datoteke:
-
+#### 2. Način
 ``` bash
-gcc -Wall drugi.c hello.c -o drugi
+chmod [referenca][operator][mod] <ime_datoteke>
+ili
+chmod [referenca][operator][mod] <ime_direktroija> -R
 ```
-___
+Referenca predstavlja sljedeće: vlasnika `u`, grupu `g` ili ostale `o`.
+Operator definira dodajemo li `+` ili oduzimamo li `-` prava referenci. Osim `+` i `-` može se koristit i `=` za eksplicitno postavljanje određenog prava.
+Mod se odnosi na pravo koje dodjelujemo: `r`, `w` ili `x`.
 
-I na kraju pokrenemo program s:
-
+Primjei:
+Ako želimo vlasniku datoteke dodijeliti prava čitanja izvršavamo naredbu na sljedeći način:
 ``` bash
-./drugi
+chmod u+r test.txt
 ```
-___
-
-Sve što nam preostaje je stvoriti `Makefile` datoteku u kojoj ćemo pravilima povezati prevođenje i izvršavanje ovih dvaju programa te na taj način omogućiti automatsko prevođenje i izvršavanje, bez da svaku put posebno unosimo naredbe za prevođenje i naredbe za izvršavanje.
-
-Za stvaranje makefile datoteke upisujemo sljedeću naredbu:
-
+Ako želimo vlasniku datoteke oduzeti prava pisanja izvršavamo naredbu na sljedeći način:
 ``` bash
-joe makefile
+chmod u-w test.txt
 ```
-___
-
-U jednoj `Makefile` datoteci može biti više pravila, pa ćemo ih sve zapisati u istu, no prije toga prođimo malo kroz `make` sintaksu.
-
-___
-
-#### Make varijable
-
-Varijable se definiraju VELIKIM slovima.
-
+Ako želimo vlasniku i grupi dodati prava čitanja i pisanja izvršavamo naredbu na sljedeći način:
 ``` bash
-VARIJABLA = nekakav_string
+chmod ug+rw test.txt
 ```
-
-Pozivanje varijable vrši se korištenjem znaka `$` ispred imena varijable koje se nalazi u zagradama:
-
+Ako želimo svima (eksplicitno) dodati prava čitanja i pisanja možemo izvršiti naredbu na sljedeći način:
 ``` bash
-$(VARIJABLA)
+chmod a=rw test.txt
 ```
+(a označava all)
 
-___
+Provjeru prava nad datotekama ili direktorijima možete izvršiti naredbom `ls -l`.
 
-#### Make pravila
-
-Pravila za prevodenje i povezivanje dana su u formi:
-
+### 6. Komprimiranje: Stvaranje `.tar` datoteka 🗜️
+Kako biste komprimirali određeni direktorij koristi se naredba: `tar` s argumentom `-cf`, na sljedeći način:
 ``` bash
-naziv_pravila: ovisnosti
-   naredbe
-   ...
+tar -cf test.tar test
 ```
+`test.tar` je ime nove `.tar` datoteke koju stvaramo, a `test` je ime direktorija kojeg komprimiramo. Ono što je potrebno naglasiti je da se trebate nalaziti izvan direktorija `test`.
 
-- `naziv_pravila` je najčešće isti kao i ime datoteke koja nastaje kao produkt izvođenja pravila
-- `ovisnosti` (dependencies) predstavljaju datoteke koje su potrebne za izvršavanje pravila
-- `maredbe` su skup postupaka koji se izvršavaju kada je pozvano određeno pravilo (redak u kojem je pravilo mora bit uvučen [`TAB`])
-
-Postoje još i `implicitna pravila` koja se koriste za opisivanje nekih postupaka koji se izvode vrlo često.
-
-Na primjer:
-
+Primjer:
 ``` bash
-.c.o:
-  $(CC) $(CFLAGS) -c $<
+tar -cf test.tar test
 ```
-
-je implicitno pravilo koje se koristi za dobivanje objektne datoteke (`.o`) iz datoteke `C` izvornog koda.
-
-___
-
-U našoj makefile datoteci ćemo prvo definirati varijable:
-
+˙Pogledajmo je li se `.tar` datoteka stvorila (`ls -l`):
 ``` bash
-CC = /usr/bin/gcc
-CFLAGS = -Wall
-TARGETS = prvi prvi2 drugi drugi2
+adria:~% ls -l
+drwxr-xr-x 2 mmaslo00 stud  4096 Sep 18 15:28 test
+-rw-r--r-- 1 mmaslo00 stud 10240 Sep 18 15:29 test.tar
 ```
 
-- `CC` je putanja do `gcc` prevodioca
-- `CFLAGS` opcije za `gcc` prevodioca (sadrži `-Wall`, koja omogućuje ispis grešaka na zaslonu)
-- `TARGETS` imena izvršnih datoteka (koristi se u pravilima `all` i `clean`)
-
-___
-
-Nakon definiranja varijabli, potrebno je definirati defaultno (zadano) pravilo koje se izvršava ako `make` rutinu pozovemo bez imena pravila:
-
-``` bash
-default: drugi
-all: $(TARGETS)
-```
-
-___
-
-Sada ćemo definirati pravilo za sljedeće:
-- prevođenje i povezivanje porgrama prvi i drugi korištenjem datoteka objektnog koda [`.o` datoteke]
-- prevođenje i povezivanje programa prvi i drugi korištenjem datoteka izvornog koda (ulaz u `gcc` prevodioca [`.c` datoteke])
-
-___
-
-Dopišimo (u datoteku makefile) za početak pravila za prevođenje i povezivanje porgrama prvi i drugi korištenjem datoteka objektnog koda:
-
-``` bash
-CC = /usr/bin/gcc
-CFLAGS = -Wall
-TARGETS = prvi prvi2 drugi drugi2
-
-default: drugi
-all: $(TARGETS)
-
-prvi: prvi.o
-   $(CC) $(CFLAGS) prvi.o -o prvi
-   
-drugi: drugi.o hello.o
-   $(CC) $(CFLAGS) drugi.o hello.o -o drugi
-```
-
-___
-
-Dopišimo i pravila za prevođenje i povezivanje programa prvi i drugi korištenjem datoteka izvornog koda:
-
-``` bash
-CC = /usr/bin/gcc
-CFLAGS = -Wall
-TARGETS = prvi prvi2 drugi drugi2
-
-default: drugi
-all: $(TARGETS)
-
-prvi: prvi.o
-   $(CC) $(CFLAGS) prvi.o -o prvi
-   
-drugi: drugi.o hello.o
-   $(CC) $(CFLAGS) drugi.o hello.o -o drugi
-   
-prvi1: prvi.c
-   $(CC) $(CFLAGS) prvi.c -o prvi2
-   
-drugi2: drugi.c hello.c
-   $(CC) $(CFLAGS) drugi.c hello.c \
-   -o $(BIN)/drugi2
-```
-
-___
-
-Na kraju moramo dodati proceduru za brisanje privremenih, objektnih i izvršnih datoteka, jer ne želimo nikakav `trash` (smeće) u našoj mapi koje bi nam moglo poremetiti buduća izvršavanja:
-
-``` bash
-CC = /usr/bin/gcc
-CFLAGS = -Wall
-TARGETS = prvi prvi2 drugi drugi2
-
-default: drugi
-all: $(TARGETS)
-
-prvi: prvi.o
-   $(CC) $(CFLAGS) prvi.o -o prvi
-   
-drugi: drugi.o hello.o
-   $(CC) $(CFLAGS) drugi.o hello.o -o drugi
-   
-prvi1: prvi.c
-   $(CC) $(CFLAGS) prvi.c -o prvi2
-   
-drugi2: drugi.c hello.c
-   $(CC) $(CFLAGS) drugi.c hello.c \
-   -o $(BIN)/drugi2
-   
-clean:
-   rm -f *.o*~ a.out $(TARGETS)
-```
-
-te implicitno pravilo za prevođenje datoteka `C` izvornog koda u objektne datoteke `.o`:
-
-``` bash
-CC = /usr/bin/gcc
-CFLAGS = -Wall
-TARGETS = prvi prvi2 drugi drugi2
-
-default: drugi
-all: $(TARGETS)
-
-prvi: prvi.o
-   $(CC) $(CFLAGS) prvi.o -o prvi
-   
-drugi: drugi.o hello.o
-   $(CC) $(CFLAGS) drugi.o hello.o -o drugi
-   
-prvi2: prvi.c
-   $(CC) $(CFLAGS) prvi.c -o prvi2
-   
-drugi2: drugi.c hello.c
-   $(CC) $(CFLAGS) drugi.c hello.c \
-   -o drugi2
-   
-clean:
-   rm -f *.o*~ a.out $(TARGETS)
-   
-.c.o:
-   $(CC) $(CFLAGS) -c $<
-```
-___
-
-Sada pokušajte izvršiti neko pravilo korištenjem sljedeće naredbe:
-
-``` bash
-make ime_pravila_kojeg_smo_definirali
-```
-___
-
-Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba1` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
-
+### 7. Korištenje programa WinSCP 🌐
+Slično kao i kod Puttyja, prijavite se u svoj adria.fesb.hr račun. Umjesto terminala prikazat će vam se explorer gdje jednostavno možete pronaći vašu `.tar` datoteku na desnom prozoru i prebaciti je na lijevi prozor (vaše lokalno računalo).
