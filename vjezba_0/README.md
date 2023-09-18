@@ -123,7 +123,7 @@ joe <ime_datoteke>.<ekstenzija>
 ```
 Kada izvršite ovu naredbu otvorit će vam se joe editor, te u datoteku možete upisati što želite. Kako biste spremili promjene i izašli iz joe editora pritisnite `ctrl` + `K` + `X` (odjednom).
 
-❗ Naglasak:
+❗ Napomena:
 
 Naredba:
 ``` bash
