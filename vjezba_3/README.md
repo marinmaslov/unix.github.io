@@ -1,6 +1,6 @@
 # 🚀 Vježba 3: Standardni ulaz i izlaz
 
-# Zadatak 📋
+## Zadatak 📋
 
 Zadatak ove vježbe je napraviti 4 programa.
 
