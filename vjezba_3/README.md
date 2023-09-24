@@ -8,11 +8,11 @@ Zadatak ove vježbe je napraviti 4 programa.
 
 <b>Drugi program `drugi.c`</b> se pokreće tako da korisnik unese jednu ili više datoteka kao argumente naredbenog retka. Program zatim otvara redom te datoteke te njihov sadržaj ispisuje na terminal.
 
-<b>Treći program `treci.c`</b> napišite kao kombinaciju prva dva programa i to na način da ako korisnik unese jednu ili više datoteka, program sadržaj tih datoteka redom ispisuje na terminal, a u slučaju da argument(i) ne budu datoteke program ispisuje sve što je korisnik utipkao.
+<b>Treći program `treci.c`</b> napišite kao kombinaciju prva dva programa i to na način da ako korisnik unese jednu ili više datoteka, program sadržaj tih datoteka redom ispisuje na terminal, a u slučaju da argv(i) ne budu datoteke program ispisuje sve što je korisnik utipkao.
 
 <b>Četvrti program `cetvrti.c`</b> napišite tako da treći program prepravite na način da je funkcija koja ispisuje sadržaj datoteka napisana u zasebnoj datoteci izvornog koda `ispisi.c` (dakle, koristit ćete `header` datoteku `ispisi.h` preko koje ćete tu funkciju uključit u vaš program).
 
-Nakon toga napišite `Makefile` datoteku sa <b>pravilima</b> za prevođenje i povezivanje za sva 4 programa.
+Nakon toga napišite `Makefile` datoteku s <b>pravilima</b> za prevođenje i povezivanje za sva 4 programa.
 
 U konačnici direktorij `vjezba3` u kojem se nalaze svi vaši programi i `Makefile` datoteka komprimirajte u `.tar` datoteku te istu učitajte na elearning.
 
@@ -22,7 +22,14 @@ ___
 
 ## Upute 🧭
 
-Slobodno se koristite i uputama od prethodnih vježbi!
+Ova vježba je spoj svih dosadašnjih vježbi (neki zadaci su čak i isti) pa se slobodno koristite i uputama od prethodnih vježbi!
+
+Što će vam od uputa bit potrebno:
+Prvi program je sličan kao i [prvi primjer iz vježbe 2](https://marinmaslov.github.io/unix.github.io/vjezba_2/primjeri#primjer-1-/), samo je potrebno preurediti funkciju `printf(...)`
+-
+-
+-
+-
 
 ___
 
