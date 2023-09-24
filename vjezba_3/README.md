@@ -16,8 +16,6 @@ Nakon toga napišite `Makefile` datoteku s <b>pravilima</b> za prevođenje i pov
 
 U konačnici direktorij `vjezba3` u kojem se nalaze svi vaši programi i `Makefile` datoteka komprimirajte u `.tar` datoteku te istu učitajte na elearning.
 
-Za sve koji nisu stigli rješiti 3. i 4. zadatak, rješenja možete pronaći ovdje: - [RJEŠENJA](rjesenja/README.md)
-
 ___
 
 ## Upute 🧭
@@ -29,6 +27,8 @@ Ova vježba je spoj svih dosadašnjih vježbi (neki zadaci su čak i isti) pa se
 - Drugi program je isti kao i četvrti program u vježbi 2. Sjetite se koju naredbu možete koristiti da program, s novim imenom, kopirate u vaš novi direktorij `vjezba3`.
 - Kada napišete prvi i drugi program, kombinacijom njihovih kodova možete dobiti treći pregram. **Hint:** Ključ je u grananju!
 - Četvrti program koristi znanje stečeno u [vježbi 1](https://marinmaslov.github.io/unix.github.io/vjezba_1/)
+
+<a href="rjesenja/README.md" style="visibility:hidden;">RJEŠENJA</a>
 
 ___
 
