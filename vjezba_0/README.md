@@ -1,10 +1,10 @@
 # 🚀 Priprema za vježbe: Osnove korištenja UNIX ljuske
 
-# Sažetak 📃
+## Sažetak 📃
 
 ___
 
-# Zadatak 📋
+## Zadatak 📋
 U okviru vježbe potrebno je spojiti se na `adria.fesb.hr` preko programa Putty.
 
 Nakon uspješnog spajanja u svojem korisničkom direktoriju napravite direktorij `unix`˙(`~/unix`).
