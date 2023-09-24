@@ -18,7 +18,7 @@ U konačnici direktorij `vjezba3` u kojem se nalaze svi vaši programi i `Makefi
 
 ___
 
-## Upute 🧭
+## Upute [🧭](rjesenja/README.md)
 
 Ova vježba je spoj svih dosadašnjih vježbi (neki zadaci su čak i isti) pa se slobodno koristite i uputama od prethodnih vježbi!
 
