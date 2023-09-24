@@ -24,9 +24,11 @@ Potrebno je napraviti 3 pravila: `prvi`, `drugi` i `treci`. Za pisanje `Makefile
 
 ___
 
-### Izvršavanje pravila `prvi`, `drugi` i `treci`
+### 2. Izvršavanje pravila `prvi`, `drugi` i `treci`
 
 Nakon što ste napisali pravila u vašu `Makefile` datoteku, vrijeme je da ih izvršite i time prevedete i povežete vaše programe.
+
+___
 
 #### 📗 Pravilo `prvi`
 
@@ -41,6 +43,8 @@ Ispis:
 /usr/bin/gcc -Wall prvi.c -o prvi
 ```
 
+___
+
 #### 📘 Pravilo `drugi`
 
 Naredba:
@@ -53,6 +57,8 @@ Ispis:
 /usr/bin/gcc -Wall -c drugi.c
 /usr/bin/gcc -Wall drugi.c -o drugi
 ```
+
+___
 
 #### 📙 Pravilo `treci`
 
@@ -86,7 +92,7 @@ Vidimo da su se stvorile izvršne datoteke `prvi`, `drugi` i `treci`. U nastavku
 
 ___
 
-### Pokretanje programa
+### 3. Pokretanje programa
 
 #### 📗 Izvršavanje programa `prvi`
 
@@ -107,6 +113,9 @@ argv[3]: argument3
 
 Primijetite da se kao 0. argument ispisuje `./prvi` jer je i on argument naredbenog retka.
 
+___
+
+
 #### 📘 Izvršavanje programa `drugi`
 
 Drugi program čita sadržaj datoteke i ispisuje ga. Ime datoteke se zadaje kao argument naredenog retka.
@@ -126,6 +135,9 @@ koja mu se
 proslijedi
 kao argument!
 ```
+
+___
+
 
 #### 📙 Izvršavanje programa `treci`
 
@@ -151,7 +163,9 @@ kao argument!
 + sadržaj vaših datoteka
 ```
 
-### Prepravljanje drugog primjera
+___
+
+### 4. Prepravljanje drugog primjera
 
 Drugi primjer je potrebno prepraviti tako da se kao argument može zadati više datoteka koje program otvara redom kojim su navedene i ispisuje njihov sadržaj. Također je potrebno i nadopuniti `Makefile` datoteku sa pravilom za prevođenje ovog primjera, tj. kopirajte `drugi.c` u novu datoteku `cetvrti.c` i zatim napišite pravilo `cetvrti`.
 
@@ -160,7 +174,9 @@ Za kopiranje koristit naredbu `cp`:
 cp drugi.c cetvrti.c`
 ```
 
-*Pomoć:* Kako biste čitali i ispisivali sadržaje više datoteka poslužite se `for` petljom na način da iterirate kroz niz pokazivača na znakovne nizove (strings) od indeksa 1 (jer je na indeksu 0 ime programa). Unutar `for` petlje vršite čitanje i ispis trenutne datoteke `argv[i]` gdje je `i` brojač kojeg ćete koristiti u `for` petlji. Što znači da bi vam otvaranje datoteke `open(...)`, čitanje sadržaja datoteke `read(...)`, ispisivanje datoteke na naredbenu liniju `write(...)`, provjera je li datoteka dobro pročitana `if (n == -1) {` i zatvaranje datoteke `close(...)` trebalo biti u tijelu `for` petlje.
+**Pomoć:**
+Kako biste čitali i ispisivali sadržaje više datoteka poslužite se `for` petljom na način da iterirate kroz niz pokazivača na znakovne nizove (strings) od indeksa 1 (jer je na indeksu 0 ime programa). Unutar `for` petlje vršite čitanje i ispis trenutne datoteke `argv[i]` gdje je `i` brojač kojeg ćete koristiti u `for` petlji. Što znači da bi vam otvaranje datoteke `open(...)`, čitanje sadržaja datoteke `read(...)`, ispisivanje datoteke na naredbenu liniju `write(...)`, provjera je li datoteka dobro pročitana `if (n == -1) {` i zatvaranje datoteke `close(...)` trebalo biti u tijelu `for` petlje.
+
 ___
 
 Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba2` te istu učitate na Merlin (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
