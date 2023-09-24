@@ -29,6 +29,7 @@ Ova vježba je spoj svih dosadašnjih vježbi (neki zadaci su čak i isti) pa se
 - Drugi program je isti kao i četvrti program u vježbi 2. Sjetite se koju naredbu možete koristiti da program, s novim imenom, kopirate u vaš novi direktorij `vjezba3`.
 - Kada napišete prvi i drugi program, kombinacijom njihovih kodova možete dobiti treći pregram. **Hint:** Ključ je u grananju!
 - Četvrti program koristi znanje stećeno u [vježbi 1](https://marinmaslov.github.io/unix.github.io/vjezba_1/)
+
 ___
 
 Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba3` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
