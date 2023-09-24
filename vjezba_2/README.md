@@ -1,12 +1,16 @@
 # 🚀 Vježba 2: Argumenti naredbenog retka i rad s datotekama
 
+# Sažetak 📃
+
+___
+
 # Zadatak 📋
 
 U okviru vježbe proučite [primjere](primjeri/README.md) programskog koda (c jezik) za preuzimanje argumenata naredbenog retka i čitanje datoteke.
 
 Otvorite svoj `home` direktorij te se pozicionirajte u `unix` direktorij (stvoren u prethodnim vježbama) te stvorite direktorij imena `vjezba2`. U direktoriju `vjezba2` isprogramirajte zadane primjere te za iste napišite `Makefile` datoteku s pravilima za prevođenje i povezivanje.
 
-Drugi primjer preradite na način da se kao argument može zadati više datoteka. Program otvara datoteke redom kojim su navedene i ispisuje ih. Dopunite `Makefile`datoteku s pravilom za prevođenje ovog primjera.
+Prepravite kod drugog primjera na način da se kao argument može zadati više datoteka. Program otvara datoteke redom kojim su navedene i ispisuje ih. Dopunite zatim `Makefile` datoteku s pravilom za prevođenje trećeg primjera.
 
 Slobodno se koristite i uputama od prethodne vježbe.
 
@@ -14,22 +18,19 @@ ___
 
 ## Upute 🧭
 
-### 1. korak: Stvaranje `Makefile`datoteke s pravilima za prevođenje i povezivanje
+### 1. Stvaranje `Makefile` datoteke s pravilima `prvi`, `drugi` i `treci`
 
-Potrebno je napraviti 3 pravila: `prvi`, `drugi` i `treci`. `Makefile` napišite sami!
+Potrebno je napraviti 3 pravila: `prvi`, `drugi` i `treci`. Za pisanje `Makefile` pravila, poslužite se prethodnom vježbom ([4. Pisanje Makefile pravila]([primjeri/README.md](https://marinmaslov.github.io/unix.github.io/vjezba_1/#4-pisanje-makefile-pravila-)))!
 
-Poslužite se slobodno uputama za [vježbu 1](../vjezba_1/README.md).
+___
 
-### 2. korak: Izvršavanje pravila `prvi`, `drugi` i `treci`
+### Izvršavanje pravila `prvi`, `drugi` i `treci`
 
 Nakon što ste napisali pravila u vašu `Makefile` datoteku, vrijeme je da ih izvršite i time prevedete i povežete vaše programe.
-
-Ako je sve prošlo uspješno programe možete izvršiti i to na sljedeći način:
 
 #### 📗 Pravilo `prvi`
 
 Naredba:
-
 ```bash
 make prvi
 ```
@@ -43,7 +44,6 @@ Ispis:
 #### 📘 Pravilo `drugi`
 
 Naredba:
-
 ```bash
 make drugi
 ```
@@ -57,7 +57,6 @@ Ispis:
 #### 📙 Pravilo `treci`
 
 Naredba:
-
 ```bash
 make treci
 ```
@@ -82,9 +81,12 @@ Nakon uspješnog izvršavanja svih pravila, u direktoriju ćete imati sljedeće 
 -rw-r--r-- 1 mmaslo00 stud  546 Oct 31 18:31 treci.c
 -rw-r--r-- 1 mmaslo00 stud 2032 Oct 31 18:36 treci.o
 ```
-Vidimo da su nam se stvorile izvršne datoteke `prvi`, `drugi` i `treci`. U nastavku ćemo ih izvršiti (naravno, s argumentima).
 
-### 3. korak: Izvršavanje programa `prvi`, `drugi` i `treci`
+Vidimo da su se stvorile izvršne datoteke `prvi`, `drugi` i `treci`. U nastavku ćemo ih izvršiti (naravno, s argumentima).
+
+___
+
+### Pokretanje programa
 
 #### 📗 Izvršavanje programa `prvi`
 
@@ -149,12 +151,16 @@ kao argument!
 + sadržaj vaših datoteka
 ```
 
-### 4. korak: Prepravite drugi program i `Makefile` datoteku na sljedeći način:
+### Prepravljanje drugog primjera
 
-Drugi primjer preradite na način da se kao argument može zadati više datoteka. Program otvara datoteke redom kojim su navedene i ispisuje ih. Dopunite Makefile datoteku sa pravilom za prevođenje ovog primjera.
+Drugi primjer je potrebno prepraviti tako da se kao argument može zadati više datoteka koje program otvara redom kojim su navedene i ispisuje njihov sadržaj. Također je potrebno i nadopuniti `Makefile` datoteku sa pravilom za prevođenje ovog primjera, tj. kopirajte `drugi.c` u novu datoteku `cetvrti.c` i zatim napišite pravilo `cetvrti`.
 
-Napomena: Ne uređujte datoteku `drugi.c` već kopirajte istu te uređujte kopiju (kopiju nazovite `drugi2.c`).
+Za kopiranje koristit naredbu `cp`:
+``` bash
+cp drugi.c cetvrti.c`
+```
 
+*Pomoć:* Kako biste čitali i ispisivali sadržaje više datoteka poslužite se `for` petljom na način da iterirate kroz niz pokazivača na znakovne nizove (strings) od indeksa 1 (jer je na indeksu 0 ime programa). Unutar `for` petlje vršite čitanje i ispis trenutne datoteke `argv[i]` gdje je `i` brojač kojeg ćete koristiti u `for` petlji. Što znači da bi vam otvaranje datoteke `open(...)`, čitanje sadržaja datoteke `read(...)`, ispisivanje datoteke na naredbenu liniju `write(...)`, provjera je li datoteka dobro pročitana `if (n == -1) {` i zatvaranje datoteke `close(...)` trebalo biti u tijelu `for` petlje.
 ___
 
-Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba2` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
+Sve što vam preostaje je da kao i u prošloj vježbi napravit `.tar` datoteku od direktorija `vjezba2` te istu učitate na Merlin (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
