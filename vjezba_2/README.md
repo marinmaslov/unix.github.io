@@ -1,10 +1,10 @@
 # 🚀 Vježba 2: Argumenti naredbenog retka i rad s datotekama
 
-# Sažetak 📃
+## Sažetak 📃
 
 ___
 
-# Zadatak 📋
+## Zadatak 📋
 
 U okviru vježbe proučite [primjere](primjeri/README.md) programskog koda (c jezik) za preuzimanje argumenata naredbenog retka i čitanje datoteke.
 
