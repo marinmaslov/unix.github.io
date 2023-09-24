@@ -1,10 +1,10 @@
 # 🚀 Vježba 1: Prevođenje i povezivanje programa
 
-# Sažetak 📃
+## Sažetak 📃
 
 ___
 
-# Zadatak 📋
+## Zadatak 📋
 U okviru vježbe potrebno je napisati program koji ispisuje pozdravnu poruku, na dva načina.
 
 U prvom slučaju poruka se ispisuje iz glavnog programa. U drugom, funkcija koja ispisuje samu poruku nalazi se u zasebnoj datoteci izvornog koda (koristite se `.h` datotekom da ih povežete). Izvorni kod svih programa (`.c` datoteke) napišite korištenjem `joe` editora.
