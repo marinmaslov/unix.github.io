@@ -25,7 +25,7 @@ ___
 Ova vježba je spoj svih dosadašnjih vježbi (neki zadaci su čak i isti) pa se slobodno koristite i uputama od prethodnih vježbi!
 
 Što će vam od uputa bit potrebno:
-Prvi program je sličan kao i [prvi primjer iz vježbe 2](https://marinmaslov.github.io/unix.github.io/vjezba_2/primjeri#primjer-1-/), samo je potrebno preurediti funkciju `printf(...)`
+- Prvi program je sličan kao i [prvi primjer iz vježbe 2](https://marinmaslov.github.io/unix.github.io/vjezba_2/primjeri#primjer-1-/), samo je potrebno preurediti funkciju `printf(...)`
 -
 -
 -
