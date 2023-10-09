@@ -171,7 +171,7 @@ Drugi primjer je potrebno prepraviti tako da se kao argument može zadati više 
 
 Za kopiranje koristit naredbu `cp`:
 ``` bash
-cp drugi.c cetvrti.c`
+cp drugi.c cetvrti.c
 ```
 
 **Pomoć:**
