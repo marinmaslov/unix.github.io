@@ -30,7 +30,21 @@ ___
 💡 Kada znate naredbu, ali ne znate kako je koristiti možete se poslužiti s: man [naredba]
 ```
 ### 1. Korištenje programa Putty 💻
-napisat
+Kada otvorite program Putty, potrebno je unijeti adresu `hosta` na kojeg se spajate, u našem slučaju je to `adria.fesb.hr`. Bitno je da je odabrani `port` 22 i da je `Connection Type` SSH.
+
+<img src="img/img_01.jpg" />
+
+Kada ste sve upisali, kliknite na `Open`. Sada će vam se otvoriti terminal i tražit će vas se korisničko ime.
+
+<img src="img/img_02.jpg" />
+
+Kada uneste korisničko ime i pritisnete `Enter` tražit će vas se lozinka.
+
+<img src="img/img_03.jpg" />
+
+Prilikom upisivanja lozinke neće se pojavljivati nikakvi znakovi na terminalu! Kada loziknu upišete pritisnite `Enter`. Ako je autentifikacija prošla, otvorit će vam se vaš `home` direktorij.
+
+<img src="img/img_04.jpg" />
 
 ### 2. Navigacija među direktorijima 🗂️
 Kada se preko Puttyja spojite na server bit ćete pozicioniran u svoj `home` direktorij:
