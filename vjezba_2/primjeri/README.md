@@ -144,7 +144,7 @@ Objašnjenje koda:
 
 Ovaj C program čini nekoliko stvari pomoću sustavskih poziva za rad s datotekama i unosom/ispisom:
 
-1. Uključuje potrebna zaglavlja za sustavske pozive i funkcionalnosti:
+#### 1. Uključuje potrebna zaglavlja za sustavske pozive i funkcionalnosti:
 
 ```c
 #include <stdio.h>
@@ -155,7 +155,7 @@ Ovaj C program čini nekoliko stvari pomoću sustavskih poziva za rad s datoteka
 #include <unistd.h>
 ```
 
-2. Definira funkciju `rw` koja kopira sadržaj iz jednog file deskriptora (`fdin`) u drugi file deskriptor (`fdout`). File deskriptor može biti otvoren za čitanje (`O_RDONLY`) ili pisanje (`STDOUT_FILENO` predstavlja standardni izlaz):
+#### 2. Definira funkciju `rw` koja kopira sadržaj iz jednog file deskriptora (`fdin`) u drugi file deskriptor (`fdout`). File deskriptor može biti otvoren za čitanje (`O_RDONLY`) ili pisanje (`STDOUT_FILENO` predstavlja standardni izlaz):
 
 ```c
 int rw(int fdin, int fdout) {
@@ -173,13 +173,13 @@ int rw(int fdin, int fdout) {
 - `write(fdout, &c, 1)` piše taj znak u `fdout`.
 - Petlja se izvršava dok se ne dosegne kraj datoteke (`read` vraća 0), a broj pročitanih znakova se vraća iz funkcije.
 
-3. U glavnoj funkciji `main` program radi sljedeće stvari:
+#### 3. U glavnoj funkciji `main` program radi sljedeće stvari:
 
 - Iterira kroz argumente naredbenog retka (`argv`) počevši od drugog argumenta (`k=1`), što su nazivi datoteka koje treba kopirati.
 - Svaku datoteku otvara za čitanje koristeći `open` sustavski poziv. Ako otvaranje datoteke ne uspije (`fd == -1`), ispisuje se poruka o pogrešci pomoću `perror` i program se završava s kodom -1.
 - Zatim se poziva funkcija `rw` kako bi se kopirao sadržaj datoteke u standardni izlaz (`STDOUT_FILENO`) i zatvara se file deskriptor.
 - Ako ne postoje argumenti naredbenog retka (`k == 1`), program čita sa standardnog ulaza i ispisuje na standardni izlaz.
 
-4. Program završava s povratnim kodom 0 ako sve prođe bez grešaka.
+#### 4. Program završava s povratnim kodom 0 ako sve prođe bez grešaka.
 
 Ovaj program omogućuje kopiranje sadržaja datoteka na standardni izlaz ili kopiranje sadržaja s standardnog ulaza na standardni izlaz, ovisno o argumentima naredbenog retka koje mu se pruže.
