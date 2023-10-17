@@ -1,9 +1,5 @@
 # 🚀 Vježba 2: Argumenti naredbenog retka i rad s datotekama
 
-## Sažetak 📃
-
----
-
 ## Zadatak 📋
 
 Stvorite novi direktorij `vjezba4`. U njemu ćete stvoriti dvije `c` datoteke u kojima ćete napisati sljedeće programe.
