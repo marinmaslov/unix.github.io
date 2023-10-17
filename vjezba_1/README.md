@@ -1,9 +1,5 @@
 # 🚀 Vježba 1: Prevođenje i povezivanje programa
 
-## Sažetak 📃
-
-___
-
 ## Zadatak 📋
 U okviru vježbe potrebno je napisati program koji ispisuje pozdravnu poruku, na dva načina.
 
