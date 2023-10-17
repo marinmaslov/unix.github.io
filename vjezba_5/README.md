@@ -17,6 +17,10 @@ Za početak stvroite direktorij `vjezba5` i u njemu napravite datoteku `prvi.c`.
 
 Sljedeći program kao argument naredbenog retka uzima izvršnu datoteku koju želimo pokrenuti. Funkcijom fork() stvara se novi proces, nakon čega se memorijska slika `Child` procesa funkcijom `execl()` zamjenjuje novim programom. Procesorsko vrijeme `Child` procesa je ograničeno funkcijom `setrlimit()`. `Parrent` proces funkcijom `waitpid()` preuzima izlazni status `Child` procesa i ispituje ga.
 
+Kao i u prošloj vježbi potrbno je napisati Makefile datoteku te pokrenitu make pravilo za prevođenje i povezivanje programa.
+
+U konačnici direktorij `vjezba5` u kojem se nalaze svi vaši programi i Makefile datoteka komprimirajte u .tar datoteku te istu učitajte na elearning.
+
 ```c
 #include <stdio.h>
 #include <unistd.h>
