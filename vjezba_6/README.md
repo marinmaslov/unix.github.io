@@ -9,7 +9,7 @@ Primjer:
 
 Objašnjenje primjera:
 `./program log.out ls -al` pokreće naredbu ls sa opcijom -al. Naredba ls se pokreće u `Child` procesu, a njezin standardni izlaz se prusmerava u datoteku `ls.out`.
-U `Parent` procesu implementirajte signal handler za signal `SIGINT` (primjer za imlementaciju signal handlera). Proces treba obraditi signal na način da ga uhvati i pošalje `SIGTERM` `Child` procesu u kojem je naredba pokrenuta (koristiti sustavski poziv `kill`), nakon čega `Parent` proces završava s radom. 
+U `Parent` procesu implementirajte signal handler za signal `SIGINT` ([primjer za imlementaciju signal handlera](../dodatno/signali.md)). Proces treba obraditi signal na način da ga uhvati i pošalje `SIGTERM` `Child` procesu u kojem je naredba pokrenuta (koristiti sustavski poziv `kill`), nakon čega `Parent` proces završava s radom. 
 
 Kao i u prošloj vježbi potrbno je napisati `Makefile` datoteku te pokrenitu `make` pravilo za prevođenje i povezivanje programa.
 
