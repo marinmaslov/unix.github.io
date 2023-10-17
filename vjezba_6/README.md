@@ -104,28 +104,98 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-### Makefile
+Ovaj program demonstrira upotrebu signala u jeziku C kako bi roditeljski proces kontrolirao izvršavanje djeteta. Evo detaljnog objašnjenja koda:
 
-```make
-CC = gcc
-CFLAGS = -Wall
+#### (i) Definiranje globalnih varijabli
+   ```c
+   pid_t child_pid;
+   ```
+   - `child_pid` je globalna varijabla koja čuva ID djeteta kako bi roditelj mogao komunicirati s djetetom.
 
-all: program
+#### (ii) Definiranje signal handler funkcije za SIGINT
+   ```c
+   void sigint_handler(int signo) {
+       if (child_pid > 0) {
+           kill(child_pid, SIGTERM);
+       }
+       printf("Parent proces je primio SIGINT i poslao SIGTERM CHILD procesu.\n");
+       exit(0);
+   }
+   ```
+   - `sigint_handler` je funkcija koja se poziva kada se roditeljskom procesu pošalje signal `SIGINT` (npr. pritiskom na Ctrl+C).
+   - Ako postoji dječji proces (to jest, ako `child_pid` nije 0), roditelj šalje signal `SIGTERM` djetetu, čime ga pokušava sigurno zaustaviti.
+   - Ispisuje poruku i zatim roditeljski proces završava izvođenje.
 
-program: program.c
-    $(CC) $(CFLAGS) -o program program.c
+#### (iii) Postavljanje signal handlera u `main` funkciji
+   ```c
+   signal(SIGINT, sigint_handler);
+   ```
+   - Pomoću `signal` funkcije postavlja se signal handler za roditeljski proces kako bi mogao reagirati na signal `SIGINT`.
 
-clean:
-    rm -f program
-```
+#### (iv) Provjera broja argumenata naredbenog retka
+   ```c
+   if (argc < 3) {
+       fprintf(stderr, "Usage: %s <output_file> <program> [arguments...]\n", argv[0]);
+       return 1;
+   }
+   ```
+   - Ako nisu navedena najmanje tri argumenta (uključujući naziv programa), ispisuje se poruka o ispravnom korištenju programa i program se završava s greškom.
 
-2. Spremite ove datoteke unutar direktorija "vjezba5". Zatim, u terminalu, idite u taj direktorij i pokrenite naredbu `make` kako biste preveli program. Nakon toga, možete pokrenuti program sa željenim argumentima naredbenog retka, na primjer:
+#### (v) Stvaranje djeteta
+   ```c
+   pid_t pid = fork();
+   if (pid < 0) {
+       perror("fork");
+       return 1;
+   } else if (pid == 0) {
+       // Ovo je CHILD proces
+       // ...
+   } else {
+       // Ovo je PARENT proces
+       // ...
+   }
+   ```
+   - `fork` se koristi za stvaranje novog procesa.
+   - Ako `pid` ima vrijednost manju od 0, došlo je do greške pri stvaranju procesa.
+   - Ako je `pid` 0, to znači da smo u `Child` procesu.
+   - Ako je `pid` veći od 0, to znači da smo u `Parent` procesu.
 
-```bash
-./program ls.out ls -al
-```
+#### (vi) Operacije koje izvršava `Child` proces
+   ```c
+   FILE *output_file = fopen(argv[1], "w");
+   if (output_file == NULL) {
+       perror("fopen");
+       return 1;
+   }
+   dup2(fileno(output_file), STDOUT_FILENO);
+   fclose(output_file);
+   execvp(argv[2], &argv[2]);
+   perror("execvp");
+   return 1;
+   ```
+   - `Child` proces otvara datoteku za pisanje (nazvanu u prvom argumentu naredbenog retka).
+   - Preusmjerava standardni izlaz u otvorenu datoteku.
+   - Pokreće program s argumentima koji su navedeni u naredbenom retku.
+   - Ako `execvp` ne uspije, ispisuje se poruka o grešci i `Child` proces završava s greškom.
 
-Ovaj program će pokrenuti naredbu `ls -al` u CHILD procesu, a PARENT proces će čekati na završetak CHILD procesa i ispisati odgovarajuće informacije. Također, ako PARENT proces primi SIGINT (CTRL+C), poslat će SIGTERM CHILD procesu prije nego što završi.
+#### (vii) Operacije koje izvršava `Parent` proces
+   ```c
+   child_pid = pid;
+   int status;
+   pid_t child_pid = waitpid(pid, &status, 0);
+   printf("Process ID CHILD procesa: %d\n", child_pid);
+   if (WIFEXITED(status)) {
+       printf("CHILD proces je završio normalno s kodom izlaza: %d\n", WEXITSTATUS(status));
+   } else if (WIFSIGNALED(status)) {
+       printf("CHILD proces je završen signalom: %d\n", WTERMSIG(status));
+   }
+   return 0;
+   ```
+   - `Parent` proces bilježi ID djeteta.
+   - Koristi `waitpid` kako bi čekao na završetak `Child` procesa i dobio informacije o načinu završetka.
+   - Ispisuje ID `Child` procesa i informacije o načinu završetka (normalno ili signalom).
+   - Zatim završava s izvođenjem.
+
 ___
 
-Sve što vam preostaje je da kao i u prošloj vježbi napravite `.tar` datoteku od direktorija `vjezba6` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
+Sve što vam preostaje napisati `Makefile` te kao i u prošloj vježbi napraviti `.tar` datoteku od direktorija `vjezba6` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
