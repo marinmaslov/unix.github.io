@@ -1,7 +1,4 @@
 # 🚀 Vježba 3: Standardni ulaz i izlaz
-## Sažetak 📃
-
-___
 
 ## Zadatak 📋
 
