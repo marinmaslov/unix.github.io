@@ -1,6 +1,6 @@
 # 🚀 Vježba 5: Pokretanje novog programa
 
-# Zadatak 📋
+## Zadatak 📋
 
 Zadatak ove vježbe je napraviti direktorij `vjezba5` i u njemu napisati program koji koristi kombinaciju funkcija `fork` i `exec` za pokretanje novog programa u `CHILD` procesu. Pri tom se za program koji se poziva može navesti proizvoljan broj argumentata naredbenog retka. Primjer: `pokreni ls -al`.
 
@@ -18,7 +18,8 @@ ___
 Za početak stvroite direktorij `vjezba5` i u njemu napravite dvije datoteke: `program1.c` i `program2.c`, te u njih zalijepite sljedeći programski kod:
 
 ### `program1.c`
-Sljedeći program kao kao argument naredbenog retka uzima izvršnu datoteku koju želimo pokrenuti. Funkcijom fork() stvara se novi proces, nakon čega se memorijska slika child procesa funkcijom execl() zamjenjuje novim programom. Procesorsko vrijeme chil procesa je ograničeno funkcijom setrlimit(). Parrent proces funkcijom waitpid() preuzima izlazni status child procesa i ispituje ga.
+
+Sljedeći program kao argument naredbenog retka uzima izvršnu datoteku koju želimo pokrenuti. Funkcijom fork() stvara se novi proces, nakon čega se memorijska slika `Child` procesa funkcijom execl() zamjenjuje novim programom. Procesorsko vrijeme `Child` procesa je ograničeno funkcijom setrlimit(). Parrent proces funkcijom waitpid() preuzima izlazni status child procesa i ispituje ga.
 
 ``` c
 #include <stdio.h>
