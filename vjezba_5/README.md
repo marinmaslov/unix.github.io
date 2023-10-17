@@ -7,10 +7,6 @@ Zadatak ove vježbe je napraviti direktorij `vjezba5` i u njemu napisati program
 Obješnjenje primjera:
 `pokreni ls -al` pokreće naredbu `ls` s opcijom `-al`. Naredba ls se pokreće u `CHILD `procesu. Nakon završetka rada pozvane naredbe `PARENT` proces poziva funkciju wait i ispisuje `process ID`, način izlaska i izlazni status pokrenutog `CHILD` procesa.
 
-Također je potrebno napisati `Makefile` datoteku s <b>pravilima</b> za prevođenje i povezivanje programa.
-
-U konačnici direktorij `vjezba5` u kojem se nalaze svi vaši programi i `Makefile` datoteka komprimirajte u `.tar` datoteku te istu učitajte na elearning.
-
 ___
 
 ## Upute 🧭
