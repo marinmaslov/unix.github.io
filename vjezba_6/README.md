@@ -19,174 +19,113 @@ ___
 
 ## Upute 🧭
 
-Za početak stvroite direktorij `vjezba6`.
+Za početak stvroite direktorij `vjezba6` i unutar njega dvije datoteke, `program.c` i `Makefile`. Datoteka `program.c` može slobodno biti kopija programa iz prošle vježbe.
 
-Zatim kopirajte `program2.c` iz prošle vježbe (iz direktorija `vjezba5`) u novonastali direktorij. Preimenovanje datoteke u `program.c` možete obaviti odmah u naredbi `cp` ili nakon kopiranja naredbom `mv`.
+### program.c
 
-Nakon uspješnog kopiranja programa potrebno je program prepravit, no prvo se prisjetimo samog programa:
-
-Program kao argumente naredbenog retka prima proizvoljnu naredbu sa njenim argumentima. Funkcija `fork()` stvara novi proces, nakon čega se memorijska slika `CHILD` procesa zamjenjuje novim programom pozivom funkcije `execvp()`. Funkcija `execvp()` argumente naredbenog retka preuzima u obliku polja pokazivača, na način na koji ih funkcija `main()` u novopokrenutom programu i prima. U našem slučaju, ime programa je drugi argument naredbenog retka (argv[1] - odmah iza naredbe kojom pozivamo program), a polke pokazivača koji se proslijeđuju kao argumenti funkcije main novopokrenutog programa započinje na adresi &argv[1]. Na ovaj način, novopokrenutom programu se proslijeđuje lista argumenata naredbenog retka bez obzira na njihov broj.
-
-### `program.c`
-``` c
+```c
 #include <stdio.h>
 #include <unistd.h>
-#include <wait.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <signal.h>
 
-int main(int argc, char *argv[]) {
-  int pid, cpid;
+pid_t child_pid;
 
-  if (argc < 2) {
-    printf("Koristenje: %s NAREDBA [argumenti] ...\n", argv[0]);
-    return 0;
-  }
+// Signal handler za SIGINT
+void sigint_handler(int signo) {
+    // Pošalji SIGTERM CHILD procesu
+    if (child_pid > 0) {
+        kill(child_pid, SIGTERM);
+    }
 
-  pid = fork();
-  if (pid == -1) {              // Error
-    perror("fork");
-    return 0;
-  } else if (pid != 0) {        // Parent
-    cpid = wait(NULL);
-    printf("[PID %5d]: Terminated\n", cpid);
-  } else {
-    execvp(argv[1], &argv[1]);
-  }
-
-  return 0;
-
-}
-```
-___
-
-Program se sada može prepraviti tako da `PARENT` proces nastavlja s radom neovisno o `CHILD` procesu. Izlazni status `CHILD` procesa `PARENT` proces preuzima funkcijom `wait()` koja se poziva iz `signal handler` funkcije `child_handler`. Signal handler postavljen je funkcijom `signal()`.
-
-``` c
-#include <stdio.h>
-#include <unistd.h>
-#include <wait.h>
-
-
-int cpid = 0;
-
-static void chld_handler(int signo) {
-  cpid = wait(NULL);
-}
-
-int main(int argc, char **argv) {
-  int pid;
-
-  if (argc < 2) {
-    printf("Koristenje: %s NAREDBA [argumenti] ...\n", argv[0]);
-    return 0;
-  }
-
-  signal(SIGCHLD, chld_handler);
-
-  pid = fork();
-  if (pid == -1) {              // Error
-    perror("fork");
-    return 0;
-  } else if (pid == 0) {        // Child
-    execvp(argv[1], &argv[1]);
-  }
-
-  while (!cpid) {
-    pause();
-  }
-  printf("[PID %5d]: Terminated\n", cpid);
-
-  return 0;
-}
-```
-___
-
-Ono što je preostalo je napraviti redirekciju ispisa u datoteku, a to radimo na sljedeći način:
-``` c
-#include <stdio.h>
-#include <unistd.h>
-#include <wait.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-
-int cpid = 0;
-
-static void chld_handler(int signo) {
-        cpid = wait(NULL);
+    // Ova linija izvršit će se samo nakon završetka CHILD procesa
+    printf("Parent proces je primio SIGINT i poslao SIGTERM CHILD procesu.\n");
+    exit(0);
 }
 
 int main(int argc, char *argv[]) {
-        int fd;
-        int pid;
+    // Postavljanje signal handlera za SIGINT
+    signal(SIGINT, sigint_handler);
 
-        if(argc < 3) {
-                printf("Koristenje: %s ime_datoteke.out NAREDBA [argumenti] ...\n", argv[0]);
-                return 0;
+    // Provjera broja argumenata
+    if (argc < 3) {
+        fprintf(stderr, "Usage: %s <output_file> <program> [arguments...]\n", argv[0]);
+        return 1;
+    }
+
+    // Stvaranje CHILD procesa
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        // Greška pri fork() pozivu
+        perror("fork");
+        return 1;
+    } else if (pid == 0) {
+        // Ovo je CHILD proces
+
+        // Otvori datoteku za pisanje
+        FILE *output_file = fopen(argv[1], "w");
+        if (output_file == NULL) {
+            perror("fopen");
+            return 1;
         }
 
-        fd = open(argv[1], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+        // Preusmjeri standardni izlaz u datoteku
+        dup2(fileno(output_file), STDOUT_FILENO);
+        fclose(output_file);
 
-        if(fd<0) {
-                perror("open");
-                return 0;
+        // Pokretanje programa u CHILD procesu
+        execvp(argv[2], &argv[2]);
+
+        // Ova linija izvršit će se samo ako execvp ne uspije
+        perror("execvp");
+        return 1;
+    } else {
+        // Ovo je PARENT proces
+        child_pid = pid;
+
+        // Čekanje na završetak CHILD procesa
+        int status;
+        pid_t child_pid = waitpid(pid, &status, 0);
+
+        // Ispis informacija o CHILD procesu
+        printf("Process ID CHILD procesa: %d\n", child_pid);
+
+        // Provjera načina završetka CHILD procesa
+        if (WIFEXITED(status)) {
+            printf("CHILD proces je završio normalno s kodom izlaza: %d\n", WEXITSTATUS(status));
+        } else if (WIFSIGNALED(status)) {
+            printf("CHILD proces je završen signalom: %d\n", WTERMSIG(status));
         }
-
-        dup2(fd, STDOUT_FILENO);
-
-        if(fd != STDOUT_FILENO) {
-                close(fd);
-        }
-
-        signal(SIGCHLD, chld_handler);
-
-        pid = fork();
-
-        if(pid == -1) {
-                // ERROR
-                perror("fork");
-                return 0;
-        } else if(pid == 0) {
-                // CHILD
-                execvp(argv[2], &argv[2]);
-        }
-        
-        while(!cpid) {
-                pause();
-        }
-
-        printf("[PID %5d]: Terminated\n", cpid);
 
         return 0;
+    }
 }
-
 ```
-___
 
-U nastavku napišite `Makefile` i pravilo `program` za prevođenje i povezivanje gornjeg programa.
+### Makefile
 
-Nakon izvršavanja `make` pravila, testirajte vaš program s:
+```make
+CC = gcc
+CFLAGS = -Wall
 
-`program2`
-``` bash
+all: program
+
+program: program.c
+    $(CC) $(CFLAGS) -o program program.c
+
+clean:
+    rm -f program
+```
+
+2. Spremite ove datoteke unutar direktorija "vjezba5". Zatim, u terminalu, idite u taj direktorij i pokrenite naredbu `make` kako biste preveli program. Nakon toga, možete pokrenuti program sa željenim argumentima naredbenog retka, na primjer:
+
+```bash
 ./program ls.out ls -al
 ```
-___
 
-Otvorite ili `cat`-ajte datoteku `ls.out` da provjerite nalazi li se u njoj stvarno ispis naredbe `ls -al`. Ispis treba biti sljedeći:
-
-``` bash
-adria:~/vjezba6% ls -al
-total 28
-drwxr-xr-x  2 mmaslo00 stud 4096 Dec 19 13:59 .
-drwx--x--x 16 mmaslo00 stud 4096 Dec 19 13:59 ..
--rw-------  1 mmaslo00 stud  293 Dec 19 13:56 ls.out
--rw-r--r--  1 mmaslo00 stud    0 Dec 19 13:59 Makefile
--rwxr-xr-x  1 mmaslo00 stud 8375 Dec 19 13:56 program
--rw-r--r--  1 mmaslo00 stud  807 Dec 19 13:56 program.c
-```
-
-Ako je sve u redu, gotovi ste s vježbom!
-
+Ovaj program će pokrenuti naredbu `ls -al` u CHILD procesu, a PARENT proces će čekati na završetak CHILD procesa i ispisati odgovarajuće informacije. Također, ako PARENT proces primi SIGINT (CTRL+C), poslat će SIGTERM CHILD procesu prije nego što završi.
 ___
 
 Sve što vam preostaje je da kao i u prošloj vježbi napravite `.tar` datoteku od direktorija `vjezba6` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
