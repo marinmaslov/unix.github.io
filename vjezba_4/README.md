@@ -17,7 +17,9 @@ Prvi program napišite tako da koristite funkciju fork za stvaranje novog proces
 💡 Dohvaćanje ID-a procesa vrši se pomoću: getpid(), getppid() i getuid()
 ```
 
-Drugi program napišite tako da stvara novi proces ali na način da `parent process ID` novog procesa nije `process ID` izvornog procesa. Pri tom koristite činjenicu da nakon završetka izvršavanja procesa (nakon poziva funkcije exit) sve njegove CHILD procese nasljeđuje INIT. Također, iz oba procesa ispišite gore navedene informacije. Koji je parent process ID novog procesa?
+Drugi program napišite tako da stvara novi proces ali na način da `parent process ID` novog procesa nije `process ID` izvornog procesa. Pri tom koristite činjenicu da nakon završetka izvršavanja procesa (nakon poziva funkcije exit) sve njegove CHILD procese nasljeđuje INIT. Također, iz oba procesa ispišite gore navedene informacije. **Koji je parent process ID novog procesa?**
+
+Napišite i `Makefile` datoteku s pravilima za prevođenje i povezivanje vaših zadataka!
 
 ---
 
@@ -25,57 +27,100 @@ Osim uputa u nastavku, pročitajte i: [UNIX procesi](../dodatno/unix_procesi.md)
 
 ## Upute 🧭
 
-Evo C programa koji koristi funkciju `fork` za stvaranje novog procesa i ispisuje tražene informacije:
+### Program `prvi.c`
+
+Prvi program koristi `fork` kako bi stvorio novi proces. Prema uputama ([UNIX procesi](../dodatno/unix_procesi.md)), ako je `pid` pozitivan broj, onda je riječ o `Parent` procesu, ako je 0, onda j e riječ o `Child` procesu.
+
+### 
 
 ```c
 #include <stdio.h>
 #include <unistd.h>
 
 int main() {
-    // Stvaranje novog procesa
     pid_t pid = fork();
 
     if (pid < 0) {
-        // Greška prilikom fork-a
         perror("fork");
         return 1;
     } else if (pid == 0) {
         // Ovo je child proces
-
         printf("Child proces:\n");
         printf("PID: %d\n", getpid());
         printf("PPID: %d\n", getppid());
         printf("UID: %d\n", getuid());
-
     } else {
         // Ovo je parent proces
-
         printf("Parent proces:\n");
         printf("PID: %d\n", getpid());
         printf("PPID: %d\n", getppid());
         printf("UID: %d\n", getuid());
-
-        // Dodatni ispis za prepoznavanje novog procesa
-        printf("Novi proces ID: %d\n", pid);
-
-        // Čekanje da child proces završi (pogodno za demonstraciju u komandnoj liniji)
-        wait(NULL);
     }
 
     return 0;
 }
 ```
 
-Neka ključna objašnjenja:
+- `fork()`: Stvara novi proces. Ako je `pid` pozitivan, to znači da smo u parent procesu, a ako je nula, to znači da smo u child procesu.
+- `Child` proces ispisuje svoj `PID`, `PPID` i `UID` korištenjem funkcija `getpid()`, `getppid()` i `getuid()`.
+- `Parent` proces također ispisuje svoj `PID`, `PPID` i `UID`.
 
-- Funkcija `fork` stvara novi proces. Ako je `pid` pozitivan, to znači da smo u parent procesu, a ako je nula, to znači da smo u child procesu.
-- U oba procesa ispisujemo PID, PPID i UID koristeći funkcije `getpid`, `getppid` i `getuid`.
-- Parent proces također čeka na završetak child procesa pomoću funkcije `wait`.
+---
 
-Kada pokrenete ovaj program, možete primijetiti da će PID-ovi biti različiti, ali PPID parent procesa bit će inicijalno PPID-ova procesa koji je pokrenuo ovaj program. Nakon što parent proces završi, PPID child procesa bit će postavljen na PID inicijalnog procesa (obično procesa s PID-om 1, koji je INIT proces).
+### Program `drugi.c`:
 
+Drugi program stvara novi proces na način da `parent process ID` novog procesa nije `process ID` izvornog procesa. Pri čemu kada završi `Parent` proces, sve njegove `Child` procese nasljeđuje `INIT`.
 
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
 
+int main() {
+    pid_t pid = fork();
 
+    if (pid < 0) {
+        perror("fork");
+        return 1;
+    } else if (pid == 0) {
+        // Ovo je child proces
 
-Osim uputa raspisanih u nastavku, korisno je pročitati i: [Datoteke u C jeziku](../dodatno/datoteke.md).
+        // Stvaranje novog procesa unutar child procesa
+        execlp("ps", "ps", "-ef", NULL);
+
+        // Ova linija izvršit će se samo ako execlp ne uspije
+        perror("execlp");
+        return 1;
+
+    } else {
+        // Ovo je parent proces
+
+        // Sleep kako bi child proces završio prije nego što roditelj izađe
+        sleep(2);
+
+        // Ispis informacija o procesu
+        printf("Parent proces:\n");
+        printf("PID: %d\n", getpid());
+        printf("PPID: %d\n", getppid());
+        printf("UID: %d\n", getuid());
+    }
+
+    return 0;
+}
+```
+
+- `fork()`: Stvara novi proces. Ako je `pid` pozitivan, to znači da smo u parent procesu, a ako je nula, to znači da smo u child procesu.
+- **Child proces:**
+  - Koristi `execlp` kako bi zamijenio svoj trenutni proces s novim procesom koji izvršava `ps -ef` naredbu. 
+  - Ako `execlp` uspije, linije ispod te naredbe se ne izvršavaju. 
+  - U suprotnom, ispisuje poruku o pogrešci pomoću `perror` i završava s greškom (`return 1`).
+- **Parent proces:**
+  - Nakon stvaranja child procesa, parent proces čeka 2 sekunde prije nego što završi s izvođenjem. Ovo je dodano kako bi se osiguralo da child proces ima dovoljno vremena završiti svoje izvođenje prije nego što parent proces izađe.
+  - Ispisuje informacije o procesu, uključujući `PID` (`process ID`), `PPID` (`parent process ID`) i `UID` (`user ID`).
+
+Ovo je primjer situacije gdje je parent proces svjestan child procesa i namjerno čeka da child proces završi izvođenje prije nego što parent završi. Kroz ovo čekanje, child proces postaje `orphan` proces i nasljeđuje ga `INIT` proces (`PID` 1).
+
+---
+
+Sve što vam preostaje je da kao i u prošloj vježbi napravit .tar datoteku od direktorija vjezba2 te istu učitate na Merlin (hint: .tar datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa).
