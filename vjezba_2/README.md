@@ -18,7 +18,7 @@ ___
 
 ## Upute 🧭
 
-Osim uputa raspisanih u nastavku, korisno je pročitati i: [Datoteke u C jeziku](../dodatno/datoteke.md)
+Osim uputa raspisanih u nastavku, korisno je pročitati i: [Datoteke u C jeziku](../dodatno/datoteke.md).
 
 ### 1. Stvaranje `Makefile` datoteke s pravilima `prvi`, `drugi` i `treci`
 
