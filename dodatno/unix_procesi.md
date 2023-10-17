@@ -249,3 +249,62 @@ int main() {
 - `setsid()`: Funkcija stvara novu sesiju i postavlja trenutni proces kao sesijskog lidera, a time i lidera nove procesne grupe. To rezultira time da proces neće primati signale poslane roditeljskoj terminalnoj sesiji.
   
 Ovo je korisno u scenarijima gdje želimo da child proces bude potpuno nezavisan, na primjer, kada pišemo daemon procese ili procese koji rade u pozadini.
+
+---
+
+## 8. Zamjena memorijske slike `Child` procesa s novim programom (`execl()`)
+
+Kada želimo zamijeniti memorijsku sliku child procesa s drugim programom, koristimo funkciju `execl()` i slične funkcije (kao što su `execlp()`, `execle()`, `execv()` itd.). Ova zamjena se odnosi na promjenu izvršnog koda i podataka child procesa na temelju novog izvršnog koda.
+
+Primjer upotrebe `execl()`:
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    printf("Ovo je prije poziva execl().\n");
+
+    execl("/bin/ls", "ls", "-l", NULL);
+
+    // Ova linija izvršit će se samo ako execl ne uspije
+    perror("execl");
+    return 1;
+}
+```
+
+U ovom primjeru, program zamjenjuje svoju memorijsku sliku s programom `/bin/ls` koristeći `execl()`. Argumenti funkcije `execl()` uključuju putanju do programa koji želimo izvršiti (`/bin/ls`), ime programa (`ls`), i završni NULL.
+
+---
+
+## 9. Ograničavanje procesorskog vremena `Child` procesa (setrlimit())
+
+Funkcija `setrlimit()` se koristi za postavljanje ograničenja resursa za proces. Ograničavanje procesorskog vremena može biti korisno za sprječavanje dugotrajnih operacija koje troše previše vremena.
+
+Primjer ograničavanja procesorskog vremena na 2 sekunde:
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/resource.h>
+
+int main() {
+    struct rlimit limit;
+    limit.rlim_cur = 2;  // Ograničenje na 2 sekunde
+    limit.rlim_max = 2;  // Maksimalno ograničenje također na 2 sekunde
+
+    if (setrlimit(RLIMIT_CPU, &limit) != 0) {
+        perror("setrlimit");
+        return 1;
+    }
+
+    // Dugotrajna operacija
+    while (1) {
+        // Beskonačna petlja
+    }
+
+    return 0;
+}
+```
+
+U ovom primjeru, `setrlimit()` postavlja ograničenje procesorskog vremena na 2 sekunde (`RLIMIT_CPU`). Nakon toga slijedi simulacija dugotrajne operacije beskonačnom petljom. Kada se ograničenje procesorskog vremena premaši, proces će biti automatski prekinut.
