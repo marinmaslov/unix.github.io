@@ -15,6 +15,9 @@ Također kopirajte i `test.txt` koju ćete koristiti u programu `drugi.c`:
 - `cp /home/mmaslo00/vjezba2/primjeri/test.txt test.txt`
 
 ___
+
+Za bolje razumjevanje primjera, pročitajte i: (Datoteke u C jeziku)[../../dodatno/datoteke.md]
+
 # Primjer 1. 📋
 Sljedeći program ispisuje cijelu listu argumenata naredbenog retka
 
