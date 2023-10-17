@@ -15,3 +15,6 @@ Dodatno:
 - [Standardni ulaz i izlaz](dodatno/stdinout.md)
 - [UNIX procesi](dodatno/unix_procesi.md)
 - [Signali](dodatno/signali.md)
+
+Materijali s predavanja:
+- [Programiranje za UNIX](http://marjan.fesb.hr/~dkrst/unix/)
