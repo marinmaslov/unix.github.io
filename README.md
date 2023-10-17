@@ -12,5 +12,6 @@ Popis vježbi:
 
 Dodatno:
 - [Datoteke u C jeziku](dodatno/datoteke.md)
+- [Standardni ulaz i izlaz](dodatno/stdinout.md)
 - [UNIX procesi](dodatno/unix_procesi.md)
 - [Signali](dodatno/signali.md)
