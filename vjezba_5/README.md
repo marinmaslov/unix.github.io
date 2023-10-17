@@ -15,107 +15,79 @@ ___
 
 ## Upute 🧭
 
-Za početak stvroite direktorij `vjezba5` i u njemu napravite dvije datoteke: `program1.c` i `program2.c`, te u njih zalijepite sljedeći programski kod:
+Za početak stvroite direktorij `vjezba5` i u njemu napravite datoteku `prvi.c`.
 
-### `program1.c`
+### Program `prvi.c`
 
-Sljedeći program kao argument naredbenog retka uzima izvršnu datoteku koju želimo pokrenuti. Funkcijom fork() stvara se novi proces, nakon čega se memorijska slika `Child` procesa funkcijom execl() zamjenjuje novim programom. Procesorsko vrijeme `Child` procesa je ograničeno funkcijom setrlimit(). Parrent proces funkcijom waitpid() preuzima izlazni status child procesa i ispituje ga.
+Sljedeći program kao argument naredbenog retka uzima izvršnu datoteku koju želimo pokrenuti. Funkcijom fork() stvara se novi proces, nakon čega se memorijska slika `Child` procesa funkcijom `execl()` zamjenjuje novim programom. Procesorsko vrijeme `Child` procesa je ograničeno funkcijom `setrlimit()`. `Parrent` proces funkcijom `waitpid()` preuzima izlazni status `Child` procesa i ispituje ga.
 
-``` c
+```c
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <sys/wait.h>
-#include <sys/time.h>
-#include <sys/resource.h>
 
 int main(int argc, char *argv[]) {
-  int cpid, wstatus;
-  struct rlimit plimit;
-
-  if (argc < 2) {
-    printf("Korištenje: pokreni /putanja/na/program\n");
-    exit(0);
-  }
-
-  cpid=fork();
-  if (cpid < 0) { /* greska */
-    perror("fork");
-    exit(0);
-  } else if (cpid == 0) { /* CHILD  proces */
-    /* limit na procesorsko vrijeme za CHILD proces */
-    plimit.rlim_max=5;
-    plimit.rlim_cur=5;
-    if(setrlimit(RLIMIT_CPU, &plimit) < 0) {
-      perror("setrlimit");
-      exit(0);
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <program> [arguments...]\n", argv[0]);
+        return 1;
     }
-    execl(argv[1], argv[1], (char *)NULL);
-  } else { /* PARRENT proces */
-    waitpid(cpid, &wstatus, 0);
-    /* Provjera izlaznog statusa CHILD procesa */
-    if (WIFEXITED(wstatus)) {
-      printf("Izlazni status CHILD procesa: %d\n", WEXITSTATUS(wstatus));
-      fflush(stdout);
-    } else if (WIFSIGNALED(wstatus)) {
-      fprintf(stderr, "CHILD proces prekinut signalom: %d\n", \
-	      WTERMSIG(wstatus));
-      fflush(stderr);
+
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("fork");
+        return 1;
+    } else if (pid == 0) {
+        // Ovo je CHILD proces
+
+        // Pokretanje programa u CHILD procesu
+        execvp(argv[1], &argv[1]);
+
+        // Ova linija izvršit će se samo ako execvp ne uspije
+        perror("execvp");
+        return 1;
+    } else {
+        // Ovo je PARENT proces
+
+        // Čekanje na završetak CHILD procesa
+        int status;
+        pid_t child_pid = waitpid(pid, &status, 0);
+
+        // Ispis informacija o CHILD procesu
+        printf("Process ID CHILD procesa: %d\n", child_pid);
+
+        if (WIFEXITED(status)) {
+            printf("CHILD proces je završio normalno s kodom izlaza: %d\n", WEXITSTATUS(status));
+        } else if (WIFSIGNALED(status)) {
+            printf("CHILD proces je završen signalom: %d\n", WTERMSIG(status));
+        }
+
+        return 0;
     }
-  }
-  
-  exit(0);
 }
 ```
-Osim gornjeg programa potrebno je napisati (sami) i `hello.c` program koji u glavnoj funkciji ispisuje "Hello World!".
 
-### `program2.c`
-U ovom primjeru kao argument naredbenog retka može biti zadana proizvoljna naredba sa svojim argumentima. Funkcijom fork() stvara se novi proces, nakon čega se memorijska slika child procesa funkcijom execvp() zamjenjuje novim programom. Funkcija execvp() argumente naredbenog retka preuzima u obliku polja pokazivača, na način na koji ih funkcija main u novopokrenutom programu i prima. U našem slučaju, ime programa je drugi argument naredbenog retka (argv[1] - odmah iza naredbe kojom pozivamo program), a polke pokazivača koji se proslijeđuju kao argumenti funkcije main novopokrenutog programa započinje na adresi &argv[1]. Na ovaj način, novopokrenutom programu se proslijeđuje lista argumenata naredbenog retka bez obzira na njihov broj.
+#### (i) Provjera broja argumenata
 
-``` c
-#include <stdio.h>
-#include <unistd.h>
-#include <wait.h>
+Ako program nije pozvan s dovoljno argumenata (barem dva - ime programa i barem jedan argument), ispisuje se poruka o korištenju i program se završava s greškom.
 
-int main(int argc, char *argv[]) {
-  int pid, cpid;
+#### (ii) Stvaranje `Child` procesa
 
-  if (argc < 2) {
-    printf("Koristenje: %s NAREDBA [argumenti] ...\n", argv[0]);
-    return 0;
-  }
+Koristi se `fork()` kako bi se stvorio novi proces.
 
-  pid = fork();
-  if (pid == -1) {              // Error
-    perror("fork");
-    return 0;
-  } else if (pid != 0) {        // Parent
-    cpid = wait(NULL);
-    printf("[PID %5d]: Terminated\n", cpid);
-  } else {
-    execvp(argv[1], &argv[1]);
-  }
+#### (iii) `Child` proces
 
-  return 0;
+Ako je pid jednak nuli, to znači da smo u `Child` procesu.
+Koristi se `execvp()` kako bi se zamijenila memorijska slika `Child` procesa s novim programom.
+Ako `execvp()` ne uspije, ispisuje se poruka o pogrešci pomoću `perror()` i `Child` proces se završava s greškom.
 
-}
-```
-___
+#### (iv) `Parent` proces
 
-U nastavku napišite `Makefile` za prevođenje i povezivanje svih gornjih programa (program1.c, program2.c i hello.c).
+Ako smo u `Parent` procesu, čekamo na završetak `Child` procesa pomoću `waitpid()`.
+Ispisujemo informacije o `Child` procesu, uključujući njegov `PID`.
+Provjeravamo način završetka `Child` procesa pomoću makroa `WIFEXITED` i `WIFSIGNALED` iz <sys/wait.h>.
 
-Nakon izvršavanja `make` pravila, testirajte vaše programe s:
+---
 
-`program1`
-``` bash
-./program1 pokreni hello
-```
-
-`program2`
-``` bash
-./program1 ls -al
-```
-
-
-Sve što vam preostaje je da kao i u prošloj vježbi napravite `.tar` datoteku od direktorija `vjezba5` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
+Sve što vam preostaje je napisati `Makefile` datoteku s pravilima za prevođenje i povezivanje ovog programa te da kao i u prošloj vježbi napravite `.tar` datoteku od direktorija `vjezba5` te istu učitate na elearning (hint: `.tar` datoteku ćete prebaciti na lokalno računalo pomoću WinSCP programa). 
