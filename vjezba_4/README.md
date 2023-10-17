@@ -21,6 +21,8 @@ Drugi program napišite tako da stvara novi proces ali na način da `parent proc
 
 Napišite i `Makefile` datoteku s pravilima za prevođenje i povezivanje vaših zadataka!
 
+U konačnici direktorij `vjezba4` u kojem se nalaze svi vaši programi i Makefile datoteka komprimirajte u .tar datoteku te istu učitajte na elearning.
+
 ---
 
 Osim uputa u nastavku, pročitajte i: [UNIX procesi](../dodatno/unix_procesi.md)
