@@ -18,6 +18,8 @@ ___
 
 ## Upute 🧭
 
+Osim uputa raspisanih u nastavku, korisno je pročitati i: (Datoteke u C jeziku)[../dodatno/datoteke.md]
+
 ### 1. Stvaranje `Makefile` datoteke s pravilima `prvi`, `drugi` i `treci`
 
 Potrebno je napraviti 3 pravila: `prvi`, `drugi` i `treci`. Za pisanje `Makefile` pravila, poslužite se prethodnom vježbom ([4. Pisanje Makefile pravila]([primjeri/README.md](https://marinmaslov.github.io/unix.github.io/vjezba_1/#4-pisanje-makefile-pravila-)))!
