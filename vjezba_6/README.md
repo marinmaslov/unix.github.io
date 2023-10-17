@@ -1,15 +1,15 @@
 # 🚀 Vježba 6: Preusmjeravanje, signali
 
-# Zadatak 📋
+## Zadatak 📋
 
-Zadatak ove vježbe je napraviti direktorij `vjezba6` i u njega kopirati `program2.c` iz prošle vježbe. Isti je potrebno preimenovati u `program.c`. Zatim je potrebno prepraviti program na način da se standardni izlaz naredbe koja se pokreće preusmjerava u datoteku. Neka se ime datoteke zadaje kao prvi argument naredbenog retka, a iza imena datoteke slijedi sama naredba i njeni argumenti.
+Zadatak iz prethodne vježbe preradite na način da se standardni izlaz naredbe koja se pokreće preusmjerava u datoteku. Neka se ime datoteke zadaje kao prvi argument naredbenog retka, a iza imena datoteke slijedi sama naredba i njeni argumenti.
 
 Primjer:
 `./program ls.out ls -al`
 
 Objašnjenje primjera:
-`./program log.out ls -al` pokreće naredbu ls sa opcijom -al. Naredba ls se pokreće u CHILD procesu, a njezin standardni izlaz se prusmerava u datoteku ls.out.
-U PARENT procesu implementirajte signal handler za signal SIGCHLD (primjer za imlementaciju signal handlera). Nakon primanja signala, PARENT proces treba pokupiti izlazni status CHILD procesa.
+`./program log.out ls -al` pokreće naredbu ls sa opcijom -al. Naredba ls se pokreće u `Child` procesu, a njezin standardni izlaz se prusmerava u datoteku `ls.out`.
+U `Parent` procesu implementirajte signal handler za signal `SIGINT` (primjer za imlementaciju signal handlera). Proces treba obraditi signal na način da ga uhvati i pošalje `SIGTERM` `Child` procesu u kojem je naredba pokrenuta (koristiti sustavski poziv `kill`), nakon čega `Parent` proces završava s radom. 
 
 Kao i u prošloj vježbi potrbno je napisati `Makefile` datoteku te pokrenitu `make` pravilo za prevođenje i povezivanje programa.
 
