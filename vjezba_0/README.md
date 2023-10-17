@@ -1,9 +1,5 @@
 # 🚀 Priprema za vježbe: Osnove korištenja UNIX ljuske
 
-## Sažetak 📃
-
-___
-
 ## Zadatak 📋
 U okviru vježbe potrebno je spojiti se na `adria.fesb.hr` preko programa Putty.
 
