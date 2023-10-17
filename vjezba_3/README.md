@@ -13,8 +13,7 @@ Zadatak ove vježbe je napraviti 4 programa.
 <b>Četvrti program `cetvrti.c`</b> napišite tako da treći program prepravite na način da je funkcija koja ispisuje sadržaj datoteka napisana u zasebnoj datoteci izvornog koda `ispisi.c` (dakle, koristit ćete `header` datoteku `ispisi.h` preko koje ćete tu funkciju uključit u vaš program).
 
 ```
-❗ Napomena: Zadaci jesu slični vježbi 2, no ovdje nećemo koristit (isključivo) argumente
-            s naredbenog retka i znanje o datotekama već standardni ulaz i izlaz (stdin/stdout)
+❗ Napomena: Zadaci su slični vježbi 2, ali uz korištenje standardni ulaz i izlaz (stdin/stdout)
 ```
 
 Nakon toga napišite `Makefile` datoteku s <b>pravilima</b> za prevođenje i povezivanje za sva 4 programa.
@@ -81,8 +80,7 @@ Osim uputa za standardni ulaz i izlaz, prisjetite se i: [Datoteke u C jeziku](..
 ---
 
 ```
-💡 Ova vježba je spoj svih dosadašnjih vježbi s dodatkom o standardnom ulazu i izlazu
-   (pa se slobodno koristite i uputama od prethodnih vježbi).
+💡 Slobodno koristite i uputama od prethodnih vježbi.
 ```
 
 ---
