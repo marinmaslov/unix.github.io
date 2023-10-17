@@ -9,3 +9,7 @@ Popis vježbi:
 - [Vježba 5](vjezba_5/README.md)
 - [Vježba 6](vjezba_6/README.md)
 - [Vježba 7](vjezba_7/README.md)
+
+Dodatno:
+- [Datoteke u C jeziku](dodatno/datoteke.md)
+- [UNIX procesi](dodatno/unix_procesi.md)
