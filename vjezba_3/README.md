@@ -81,7 +81,8 @@ Osim uputa za standardni ulaz i izlaz, prisjetite se i: [Datoteke u C jeziku](..
 ---
 
 ```
-💡 Ova vježba je spoj svih dosadašnjih vježbi (neki zadaci su čak i isti) pa se slobodno koristite i uputama od prethodnih vježbi!
+💡 Ova vježba je spoj svih dosadašnjih vježbi s dodatkom o standardnom ulazu i izlazu
+   (pa se slobodno koristite i uputama od prethodnih vježbi).
 ```
 
 ---
