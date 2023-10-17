@@ -75,7 +75,7 @@ int main() {
 }
 ```
 
-Osim uputa za standardni ulaz i izlaz, prisjetite se i: [Datoteke u C jeziku](../dodatno/datoteke.md).
+Osim uputa za standardni ulaz i izlaz, prisjetite se i: [Datoteke u C jeziku](../dodatno/datoteke.md). Također pogledajte i detaljnije upute o standardnom ulazu i izlazu: [Standardni ulaz stdin i standardni izlaz stdout](../dodatno/stdinout.md).
 
 ---
 
@@ -83,33 +83,44 @@ Osim uputa za standardni ulaz i izlaz, prisjetite se i: [Datoteke u C jeziku](..
 💡 Ova vježba je spoj svih dosadašnjih vježbi (neki zadaci su čak i isti) pa se slobodno koristite i uputama od prethodnih vježbi!
 ```
 
-### 2. Pomoć za prvi zadatak
+---
 
-Prvi program je sličan kao i [prvi primjer iz vježbe 2](https://marinmaslov.github.io/unix.github.io/vjezba_2/primjeri), samo je potrebno preurediti funkciju `printf(...)` na način da iterirate kroz argumente naredbenog retka te iste ispisujete.
+### Pomoć za prvi zadatak
 
-```
-💡 Broj argumenata naredbenog retka se nalazi u argc, a sami argumenti su u nizu argv.
+Prvi program je sličan kao i [prvi primjer iz vježbe 2](https://marinmaslov.github.io/unix.github.io/vjezba_2/primjeri), samo je potrebno preurediti glavnu funkciju da koristi `buffer` i unos korisnika (`stdin`) ispisuje na standardni izlaz.
+
+``` c
+while (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+    printf("Ponovni ispis: %s", buffer);
+}
 ```
 
 ---
 
-### 3. Pomoć za drugi zadatak
+### Pomoć za drugi zadatak
 
-Drugi program je isti kao i četvrti program u vježbi 2. Sjetite se koju naredbu možete koristiti da program, s novim imenom, kopirate u direktorij `vjezba3`.
+Drugi program je isti kao i četvrti program u vježbi 2. No za ispis sadržaja datoteke isto koristite `buffer`.
+
+```c
+char buffer[1000];
+while (fgets(buffer, sizeof(buffer), file) != NULL) {
+    printf("%s", buffer);
+}
+```
 
 ---
 
-### 4. Pomoć za treći zadatak
+### Pomoć za treći zadatak
 
 Kada napišete prvi i drugi program, kombinacijom njihovih kodova možete dobiti treći pregram.
 
 ```
-💡 Hint: Ključ je u grananju!
+💡 Hint: Ključ je u uvjetima!
 ```
 
 ---
 
-### 5. Pomoć za četvrti zadatak
+### Pomoć za četvrti zadatak
 
 Za četvrti program koristi znanje stečeno u [vježbi 1](https://marinmaslov.github.io/unix.github.io/vjezba_1/)
 
