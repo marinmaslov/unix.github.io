@@ -97,7 +97,7 @@ Kao rezultat ćemo dobiti datoteku `prvi.o` koja se koristi u nastavku.
 
 Povezivanje:
 ``` bash
-gcc -Wall prvi.c -o prvi
+gcc -Wall prvi.o -o prvi
 ```
 Kao rezultat ćemo dobiti izvršnu (executable) datoteku `prvi`.
 
