@@ -38,7 +38,7 @@ make prvi
 Ispis:
 ```bash
 /usr/bin/gcc -Wall -c prvi.c
-/usr/bin/gcc -Wall prvi.c -o prvi
+/usr/bin/gcc -Wall prvi.o -o prvi
 ```
 
 ___
@@ -53,7 +53,7 @@ make drugi
 Ispis:
 ```bash
 /usr/bin/gcc -Wall -c drugi.c
-/usr/bin/gcc -Wall drugi.c -o drugi
+/usr/bin/gcc -Wall drugi.o -o drugi
 ```
 
 ___
@@ -67,7 +67,6 @@ make treci
 
 Ispis:
 ```bash
-/usr/bin/gcc -Wall -c treci.c
 /usr/bin/gcc -Wall treci.c -o treci
 ```
 
@@ -144,7 +143,7 @@ Treći program ima funkcionalnost UNIX naredbe cat. Program ispisuje sadržaj sv
 Iz direktorija s primjerima ste kopirali `test.txt`, dodatne datoteke (minimalno dvije) napravite sami.
 
 ```bash
-./treci test.txt
+./treci test.txt vasa_dat.txt
 ```
 
 Ispis za ovaj primjer će biti sljedeći:
