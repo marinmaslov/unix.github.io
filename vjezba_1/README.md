@@ -89,13 +89,14 @@ gcc -Wall prvi.c -o prvi
 ❗ Napomena: `a.out` i `prvi` su identične datoteke.
 
 Gore je prikazano prevođenje i povezivanje u jednoj liniji. Ono se može razbiti na dva dijela.
-Prevođenje:
+
+**Prevođenje:**
 ``` bash
 gcc -Wall -c prvi.c
 ```
 Kao rezultat ćemo dobiti datoteku `prvi.o` koja se koristi u nastavku.
 
-Povezivanje:
+**Povezivanje:**
 ``` bash
 gcc -Wall prvi.o -o prvi
 ```
