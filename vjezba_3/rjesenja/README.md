@@ -192,7 +192,15 @@ int ispisi_sadrzaj_datoteke(char *ime_datoteke) {
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         // Ako nema datoteka navedenih kao argumenti, koristi se ponovni ispis unosa korisnika
-        return system("./ponovni_ispis");
+        char unos[100];
+        while (1) {
+            printf("Upiši tekst: ");
+            fgets(unos, sizeof(unos), stdin);
+            if (strcmp(unos, "kraj programa") == 0) {
+                return 0;
+            }
+            printf("%s", unos);
+        }
     }
 
     for (int i = 1; i < argc; i++) {
@@ -262,12 +270,26 @@ Ovaj program čini nekoliko stvari. Evo detaljnog objašnjenja:
    ```c
    if (argc < 2) {
        // Ako nema datoteka navedenih kao argumenti, koristi se ponovni ispis unosa korisnika
-       return system("./ponovni_ispis");
+       char unos[100];
+        while (1) {
+            fgets(unos, sizeof(unos), stdin);
+            if (strcmp(unos, "kraj programa") == 0) {
+                return 0;
+            }
+            printf("%s", unos);
+        }
    }
    ```
-   Ako nema dovoljno argumenata (barem dva - ime izvršne datoteke i ime datoteka čiji sadržaj će se ispisati), program poziva vanjski program `ponovni_ispis` pomoću funkcije `system`.
+   Ako nema dovoljno argumenata (barem dva - ime izvršne datoteke i ime datoteka čiji sadržaj će se ispisati), program će ispisivati korisnikov unos dok korsnik ne unese string "kraj programa". Mogli smo i pozvati vanjski program `ponovni_ispis` (u kojem bi implementirali logiku ispisa korisnikovog unosa) pomoću funkcije `system`:
 
-9. **Petlja za obradu svake datoteke:**
+   ``` c
+if (argc < 2) {
+        // Ako nema datoteka navedenih kao argumenti, koristi se ponovni ispis unosa korisnika
+        return system("./ponovni_ispis");
+    }
+   ```
+
+10. **Petlja za obradu svake datoteke:**
    ```c
    for (int i = 1; i < argc; i++) {
        if (ispisi_sadrzaj_datoteke(argv[i]) == -1) {
@@ -277,7 +299,7 @@ Ovaj program čini nekoliko stvari. Evo detaljnog objašnjenja:
    ```
    Petlja prolazi kroz sve argumente komandne linije, koji predstavljaju imena datoteka. Za svaku datoteku poziva se funkcija `ispisi_sadrzaj_datoteke`. Ako ta funkcija vrati -1, program završava s greškom pomoću funkcije `exit`.
 
-10. **Završetak programa:**
+11. **Završetak programa:**
     ```c
     return 0;
     ```
