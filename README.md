@@ -14,6 +14,7 @@ Dodatno:
 - [Datoteke u C jeziku](dodatno/datoteke.md)
 - [Standardni ulaz i izlaz](dodatno/stdinout.md)
 - [UNIX procesi](dodatno/unix_procesi.md)
+- [Obitelj "exec" funkcija](dodatno/exec_funkcije.md)
 - [Signali](dodatno/signali.md)
 
 Materijali s predavanja:
